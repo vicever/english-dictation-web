@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语单词默写系统 - 东昌中学词汇手册</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #4A90D9;
+  --primary-dark: #3578C0;
+  --primary-light: #E8F2FC;
+  --success: #52c41a;
+  --error: #ff4d4f;
+  --warning: #faad14;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #333333;
+  --text-light: #666666;
+  --border: #e8e8e8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.12);
+  --radius: 12px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.navbar {
+  background: var(--card);
+  box-shadow: var(--shadow);
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar .logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.navbar .logo .icon {
+  width: 32px; height: 32px;
+  background: var(--primary);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 18px;
+}
+.navbar .stats {
+  font-size: 13px;
+  color: var(--text-light);
+  display: flex;
+  gap: 20px;
+}
+.navbar .stats span {
+  display: flex; align-items: center; gap: 4px;
+}
+.navbar .stats .num {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 15px;
+}
+
+/* Main layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 4px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+.tab {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--text-light);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.tab.active {
+  background: var(--primary);
+  color: white;
+}
+.tab:hover:not(.active) {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+kbd {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+  font-family: inherit;
+  color: #555;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title .badge {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Settings panel */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.setting-item label {
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.setting-item label .hint {
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
+}
+.setting-item input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+}
+.setting-item select,
+.setting-item input[type="number"] {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.setting-item select:focus,
+.setting-item input:focus {
+  border-color: var(--primary);
+}
+.range-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+.range-value {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-success {
+  background: var(--success);
+  color: white;
+}
+.btn-success:hover { opacity: 0.85; }
+.btn-danger {
+  background: var(--error);
+  color: white;
+}
+.btn-danger:hover { opacity: 0.85; }
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.btn-lg {
+  padding: 14px 36px;
+  font-size: 16px;
+}
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Dictation */
+.dictation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 20px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.progress-text {
+  font-size: 14px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.progress-text .current {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.question-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.question-pos {
+  display: inline-block;
+  padding: 4px 14px;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.question-meaning {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.question-phonetic {
+  font-size: 16px;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.question-hint {
+  font-size: 13px;
+  color: #999;
+  margin-top: 12px;
+}
+.answer-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 20px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+  margin: 20px auto 0;
+  display: block;
+}
+.answer-input:focus {
+  border-color: var(--primary);
+}
+.answer-input.correct {
+  border-color: var(--success);
+  background: #f6ffed;
+}
+.answer-input.wrong {
+  border-color: var(--error);
+  background: #fff2f0;
+}
+
+.result-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-left: 4px solid var(--border);
+}
+.result-card.correct { border-left-color: var(--success); }
+.result-card.wrong { border-left-color: var(--error); }
+.result-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.result-card.correct .result-icon { background: #f6ffed; color: var(--success); }
+.result-card.wrong .result-icon { background: #fff2f0; color: var(--error); }
+.result-content { flex: 1; text-align: left; }
+.result-word { font-size: 18px; font-weight: 700; }
+.result-phonetic { font-size: 14px; color: var(--text-light); font-style: italic; }
+.result-meaning { font-size: 14px; color: var(--text-light); }
+.result-your-answer { font-size: 14px; color: var(--error); margin-top: 4px; }
+.result-actions { display: flex; gap: 8px; }
+
+/* Summary */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.summary-stat {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.summary-stat .num {
+  font-size: 36px;
+  font-weight: 700;
+}
+.summary-stat .label {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.summary-stat.correct .num { color: var(--success); }
+.summary-stat.wrong .num { color: var(--error); }
+.summary-stat.rate .num { color: var(--primary); }
+.summary-stat.time .num { color: var(--warning); }
+
+/* Error book */
+.error-list { }
+.error-item {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s;
+}
+.error-item:hover { box-shadow: var(--shadow); }
+.error-item .word-col { flex: 1; }
+.error-item .word { font-size: 18px; font-weight: 700; }
+.error-item .phonetic { font-size: 13px; color: var(--text-light); font-style: italic; }
+.error-item .meaning { font-size: 14px; color: var(--text-light); }
+.error-item .count {
+  background: var(--error);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.error-item .last-date {
+  font-size: 12px;
+  color: #999;
+}
+.error-item .remove-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+}
+.error-item .remove-btn:hover { color: var(--error); }
+.error-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+/* History */
+.history-item {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border);
+}
+.history-item .date { font-size: 14px; color: var(--text-light); width: 140px; }
+.history-item .type { font-size: 13px; padding: 2px 10px; border-radius: 12px; }
+.history-item .type.new { background: var(--primary-light); color: var(--primary); }
+.history-item .type.review { background: #fff7e6; color: var(--warning); }
+.history-item .stats { flex: 1; display: flex; gap: 16px; font-size: 14px; }
+.history-item .stats .correct { color: var(--success); }
+.history-item .stats .wrong { color: var(--error); }
+.history-item .stats .rate { color: var(--primary); font-weight: 600; }
+
+/* Word list */
+.word-search {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  margin-bottom: 16px;
+  outline: none;
+}
+.word-search:focus { border-color: var(--primary); }
+.word-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.word-table th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid var(--border);
+  font-size: 14px;
+  color: var(--text-light);
+  position: sticky;
+  top: 0;
+  background: var(--card);
+}
+.word-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.word-table tr:hover { background: var(--primary-light); }
+.word-table .word-col { font-weight: 600; }
+.word-table .phonetic-col { color: var(--text-light); font-style: italic; font-size: 13px; }
+.word-table .pos-col { color: var(--primary); font-size: 13px; }
+.word-table .meaning-col { color: var(--text); }
+.word-table-wrap {
+  max-height: 600px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Tab content */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: var(--text);
+  color: white;
+  font-size: 14px;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background: var(--success); }
+.toast.error { background: var(--error); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+.empty-state .title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+.empty-state .desc { font-size: 14px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar { padding: 0 12px; }
+  .navbar .stats { display: none; }
+  .container { padding: 12px; }
+  .question-meaning { font-size: 22px; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .dictation-header { flex-wrap: wrap; }
+  .progress-bar { margin: 12px 0; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+/* Review indicator */
+.review-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #fff7e6;
+  color: var(--warning);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.new-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+/* Phrase badge in word table */
+.phrase-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Mode toggle */
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.mode-option {
+  flex: 1;
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.mode-option:hover { border-color: var(--primary); }
+.mode-option.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+.mode-option .title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.mode-option .desc { font-size: 12px; color: var(--text-light); }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">
+    <div class="icon">W</div>
+    英语单词默写系统
+  </div>
+  <div class="stats">
+    <span>词库: <span class="num" id="totalWords">0</span></span>
+    <span>已默: <span class="num" id="totalDictated">0</span></span>
+    <span>错题: <span class="num" id="totalErrors">0</span></span>
+    <span>正确率: <span class="num" id="totalAccuracy">0%</span></span>
+  </div>
+</nav>
+
+<div class="container">
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="dictation" onclick="switchTab('dictation')">默写练习</button>
+    <button class="tab" data-tab="errorbook" onclick="switchTab('errorbook')">错题册</button>
+    <button class="tab" data-tab="history" onclick="switchTab('history')">默写记录</button>
+    <button class="tab" data-tab="wordlist" onclick="switchTab('wordlist')">词库浏览</button>
+    <button class="tab" data-tab="settings" onclick="switchTab('settings')">设置</button>
+  </div>
+
+  <!-- Dictation Tab -->
+  <div class="tab-content active" id="tab-dictation">
+    <!-- Setup panel -->
+    <div id="dictation-setup">
+      <div class="card">
+        <div class="card-title">
+          默写设置
+          <span class="badge" id="setupWordCount">共 0 词可选</span>
+        </div>
+        
+        <div class="mode-toggle">
+          <div class="mode-option selected" onclick="selectMode('new', this)">
+            <div class="title">新词默写</div>
+            <div class="desc">从词库中随机抽取新单词进行默写</div>
+          </div>
+          <div class="mode-option" onclick="selectMode('review', this)">
+            <div class="title">复习默写</div>
+            <div class="desc">回顾之前默写过的单词（含错题复习）</div>
+          </div>
+        </div>
+        
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label>默写范围 <span class="hint">（按页码区间）</span></label>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="number" id="rangeStart" min="1" max="326" value="1" style="width:80px" onchange="updateWordCount()">
+              <span>—</span>
+              <input type="number" id="rangeEnd" min="1" max="326" value="326" style="width:80px" onchange="updateWordCount()">
+              <span style="font-size:12px;color:#999">页</span>
+            </div>
+          </div>
+          
+          <div class="setting-item">
+            <label>抽取比例 <span class="hint">（从范围内抽取）</span></label>
+            <input type="range" id="ratio" min="5" max="100" value="30" oninput="updateRatioDisplay()">
+            <div class="range-display">
+              <span>5%</span>
+              <span class="range-value" id="ratioValue">30%</span>
+              <span>100%</span>
+            </div>
+          </div>
+          
+          <div class="setting-item">
+            <label>词组占比 <span class="hint">（单词与词组的分配比例）</span></label>
+            <input type="range" id="phraseRatio" min="0" max="100" value="50" oninput="updatePhraseRatioDisplay()">
+            <div class="range-display">
+              <span>0%</span>
+              <span class="range-value" id="phraseRatioValue">50%</span>
+              <span>100%</span>
+            </div>
+          </div>
+          
+          <div class="setting-item">
+            <label>默写数量上限 <span class="hint">（0=不限）</span></label>
+            <input type="number" id="maxCount" min="0" max="500" value="50" onchange="updateWordCount()">
+          </div>
+          
+          <div class="setting-item">
+            <label>复习抽取比例 <span class="hint">（仅复习模式）</span></label>
+            <input type="range" id="reviewRatio" min="5" max="50" value="15" oninput="updateReviewRatioDisplay()">
+            <div class="range-display">
+              <span>5%</span>
+              <span class="range-value" id="reviewRatioValue">15%</span>
+              <span>50%</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top:20px; padding:12px 16px; background:#fff7e6; border-radius:8px; font-size:13px; color:#8c6e2a;">
+          <strong>复习策略说明：</strong>复习模式下，优先抽取错题册中的单词；同时从较长时间之前默写过的单词中按低比例随机抽取部分进行"抽默加深印象"，抽取比例远低于当日新词默写比例。最近 3 天内默写过的单词不会重复出现。
+        </div>
+        
+        <div style="margin-top:20px;">
+          <button class="btn btn-primary btn-lg" onclick="startDictation()">
+            开始默写
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Dictation in progress -->
+    <div id="dictation-active" style="display:none">
+      <div class="dictation-header">
+        <button class="btn btn-outline btn-sm" onclick="quitDictation()">退出</button>
+        <div class="progress-bar"><div class="progress-fill" id="dictProgress" style="width:0%"></div></div>
+        <div class="progress-text"><span class="current" id="dictCurrent">1</span> / <span id="dictTotal">10</span></div>
+      </div>
+      
+      <div id="dictationMode" style="margin-bottom:16px; text-align:center;">
+        <span class="new-badge" id="modeBadge">新词默写</span>
+      </div>
+      
+      <div class="question-card" id="questionCard">
+        <div class="question-pos" id="questionPos">n.</div>
+        <div class="question-meaning" id="questionMeaning">能力</div>
+        <div class="question-phonetic" id="questionPhonetic"></div>
+        <div class="question-hint" id="questionHint">输入英文单词或词组，按回车键提交</div>
+        <input type="text" class="answer-input" id="answerInput" 
+          placeholder="在此输入英文..." 
+          autocomplete="off" autocorrect="off" autocapitalize="off"
+          onkeyup="checkEnter(event)">
+      </div>
+      
+      <div style="text-align:center; margin-top:16px;">
+        <button class="btn btn-primary" onclick="submitAnswer()">提交</button>
+        <button class="btn btn-outline" onclick="skipWord()">跳过</button>
+        <button class="btn btn-outline" onclick="showHint()">提示首字母</button>
+      </div>
+      
+      <div style="text-align:center; margin-top:12px; font-size:12px; color:#999;">
+        <kbd>Enter</kbd> 提交 &nbsp; <kbd>←</kbd>/<kbd>→</kbd> 跳过 &nbsp; <kbd>Tab</kbd> 提示 &nbsp; <kbd>Esc</kbd> 退出
+      </div>
+    </div>
+    
+    <!-- Dictation result -->
+    <div id="dictation-result" style="display:none">
+      <div class="card">
+        <div class="card-title">默写结果</div>
+        
+        <div class="summary-grid">
+          <div class="summary-stat correct">
+            <div class="num" id="resultCorrect">0</div>
+            <div class="label">正确</div>
+          </div>
+          <div class="summary-stat wrong">
+            <div class="num" id="resultWrong">0</div>
+            <div class="label">错误</div>
+          </div>
+          <div class="summary-stat rate">
+            <div class="num" id="resultRate">0%</div>
+            <div class="label">正确率</div>
+          </div>
+          <div class="summary-stat time">
+            <div class="num" id="resultTime">0s</div>
+            <div class="label">用时</div>
+          </div>
+        </div>
+        
+        <div id="resultDetails"></div>
+        
+        <div style="margin-top:20px;">
+          <button class="btn btn-primary" onclick="resetDictation()">再来一轮</button>
+          <button class="btn btn-outline" onclick="switchTab('errorbook')">查看错题册</button>
+          <span style="font-size:12px;color:#999;margin-left:12px;"><kbd>R</kbd> 再来一轮 &nbsp; <kbd>E</kbd> 查看错题册</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Book Tab -->
+  <div class="tab-content" id="tab-errorbook">
+    <div class="card">
+      <div class="card-title">
+        错题册
+        <span class="badge" id="errorBookCount">0 题</span>
+      </div>
+      
+      <div class="btn-group" style="margin-bottom:16px;">
+        <button class="btn btn-danger btn-sm" onclick="reviewErrors()">开始复习错题</button>
+        <button class="btn btn-outline btn-sm" onclick="clearAllErrors()">清空错题册</button>
+        <button class="btn btn-outline btn-sm" onclick="exportErrors()">导出错题</button>
+      </div>
+      
+      <div class="error-list" id="errorList">
+        <div class="error-empty">错题册为空，快去默写吧！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Tab -->
+  <div class="tab-content" id="tab-history">
+    <div class="card">
+      <div class="card-title">
+        默写记录
+        <span class="badge" id="historyCount">0 次</span>
+      </div>
+      
+      <div class="btn-group" style="margin-bottom:16px;">
+        <button class="btn btn-outline btn-sm" onclick="clearHistory()">清空记录</button>
+      </div>
+      
+      <div id="historyList">
+        <div class="error-empty">暂无默写记录</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word List Tab -->
+  <div class="tab-content" id="tab-wordlist">
+    <div class="card">
+      <div class="card-title">
+        词库浏览
+        <span class="badge" id="wordListCount">0 词</span>
+      </div>
+      
+      <input type="text" class="word-search" id="wordSearch" placeholder="搜索单词或释义..." oninput="filterWordList()">
+      
+      <div class="word-table-wrap">
+        <table class="word-table">
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th>单词</th>
+              <th>音标</th>
+              <th>词性</th>
+              <th>释义</th>
+            </tr>
+          </thead>
+          <tbody id="wordTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Tab -->
+  <div class="tab-content" id="tab-settings">
+    <div class="card">
+      <div class="card-title">设置</div>
+      
+      <div style="margin-bottom:24px;">
+        <h3 style="font-size:16px; margin-bottom:12px;">数据管理</h3>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="exportData()">导出全部数据</button>
+          <button class="btn btn-outline" onclick="document.getElementById('importFile').click()">导入数据</button>
+          <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+          <button class="btn btn-danger" onclick="resetAllData()">重置全部数据</button>
+        </div>
+      </div>
+      
+      <div style="margin-bottom:24px;">
+        <h3 style="font-size:16px; margin-bottom:12px;">默写设置</h3>
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label>默认抽取比例</label>
+            <input type="range" id="defaultRatio" min="5" max="100" value="30" oninput="document.getElementById('defaultRatioValue').textContent=this.value+'%'">
+            <div class="range-display"><span class="range-value" id="defaultRatioValue">30%</span></div>
+          </div>
+          <div class="setting-item">
+            <label>默认词组占比</label>
+            <input type="range" id="defaultPhraseRatio" min="0" max="100" value="50" oninput="document.getElementById('defaultPhraseRatioValue').textContent=this.value+'%'">
+            <div class="range-display"><span class="range-value" id="defaultPhraseRatioValue">50%</span></div>
+          </div>
+          <div class="setting-item">
+            <label>复习抽默比例</label>
+            <input type="range" id="defaultReviewRatio" min="5" max="50" value="15" oninput="document.getElementById('defaultReviewRatioValue').textContent=this.value+'%'">
+            <div class="range-display"><span class="range-value" id="defaultReviewRatioValue">15%</span></div>
+          </div>
+          <div class="setting-item">
+            <label>免重复天数</label>
+            <input type="number" id="noRepeatDays" min="1" max="30" value="3">
+          </div>
+          <div class="setting-item">
+            <label>错题优先级</label>
+            <select id="errorPriority">
+              <option value="high">高（优先复习错题）</option>
+              <option value="medium">中</option>
+              <option value="low">低</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-bottom:24px;">
+        <h3 style="font-size:16px; margin-bottom:12px;">关于</h3>
+        <div style="font-size:14px; color:var(--text-light); line-height:1.8;">
+          <p><strong>英语单词默写系统</strong> v1.0</p>
+          <p>词库来源：东昌中学英语词汇手册（第 1–326 页）</p>
+          <p>功能：随机默写、错题管理、间隔复习、统计分析</p>
+          <p>词库数据：从外部 vocab_data.json 文件加载（与 HTML 同目录部署即可）</p>
+          <p>用户数据：错题、进度等保存在浏览器本地（localStorage），无需联网</p>
+          <p>提示：建议定期"导出数据"备份，清除浏览器缓存不会丢失数据</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// 词库数据从外部 vocab_data.json 加载（需通过本地 HTTP 服务器访问）
+window.VOCAB_DATA = null; // 加载完成前为 null
+window.VOCAB_LOADING = false;
+
+async function loadVocabFromExternal() {
+  if (window.VOCAB_DATA !== null) return window.VOCAB_DATA;
+  if (window.VOCAB_LOADING) return null;
+  window.VOCAB_LOADING = true;
+  try {
+    const resp = await fetch('vocab_data.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    window.VOCAB_DATA = await resp.json();
+    window.VOCAB_LOADING = false;
+    return window.VOCAB_DATA;
+  } catch(err) {
+    window.VOCAB_LOADING = false;
+    console.error('词库加载失败:', err);
+    // 显示加载失败提示
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;color:#333;"><div style="font-size:24px;margin-bottom:16px;">词库加载失败</div><div style="font-size:14px;color:#666;max-width:500px;text-align:center;line-height:1.8;">词库数据文件 (vocab_data.json) 加载失败。<br><br>可能原因：vocab_data.json 未与 HTML 文件放在同一目录，或服务器未正确部署该文件。<br><br>请检查文件部署后刷新页面。</div></div>';
+    return null;
+  }
+}
+</script>
+
+<script>
+// ===== App State =====
+let vocabData = [];
+let dictationMode = 'new';
+let currentQuestions = [];
+let currentIndex = 0;
+let dictationStartTime = 0;
+let dictationResults = [];
+let currentHint = '';
+let answeredThisRound = false;
+
+// ===== Storage Keys =====
+const STORAGE_KEYS = {
+  errorBook: 'vocab_error_book',
+  history: 'vocab_history',
+  dictated: 'vocab_dictated_words',
+  settings: 'vocab_settings',
+  stats: 'vocab_stats'
+};
+
+// ===== Initialization =====
+async function init() {
+  await loadVocabData();
+  loadSettings();
+  updateNavbarStats();
+  updateWordCount();
+  renderErrorBook();
+  renderHistory();
+  renderWordList();
+  
+  // Load saved settings to UI
+  const settings = getSettings();
+  document.getElementById('defaultRatio').value = settings.defaultRatio || 30;
+  document.getElementById('defaultRatioValue').textContent = (settings.defaultRatio || 30) + '%';
+  document.getElementById('defaultReviewRatio').value = settings.defaultReviewRatio || 15;
+  document.getElementById('defaultReviewRatioValue').textContent = (settings.defaultReviewRatio || 15) + '%';
+  document.getElementById('defaultPhraseRatio').value = (settings.defaultPhraseRatio === undefined ? 50 : settings.defaultPhraseRatio);
+  document.getElementById('defaultPhraseRatioValue').textContent = (settings.defaultPhraseRatio === undefined ? 50 : settings.defaultPhraseRatio) + '%';
+  document.getElementById('noRepeatDays').value = settings.noRepeatDays || 3;
+  document.getElementById('errorPriority').value = settings.errorPriority || 'high';
+}
+
+async function loadVocabData() {
+  vocabData = await loadVocabFromExternal();
+  if (!vocabData) return;
+  // 兼容旧数据（无 t 字段视为单词）
+  vocabData.forEach(w => { if (!w.t) w.t = 'word'; });
+  const wordCount = vocabData.filter(w => w.t !== 'phrase').length;
+  const phraseCount = vocabData.length - wordCount;
+  document.getElementById('totalWords').textContent = vocabData.length;
+  document.getElementById('wordListCount').textContent = wordCount + ' 词 + ' + phraseCount + ' 词组';
+  document.getElementById('setupWordCount').textContent = '共 ' + vocabData.length + ' 词可选';
+}
+
+// ===== Storage Functions =====
+function getSettings() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.settings) || '{}'); } 
+  catch(e) { return {}; }
+}
+
+function saveSettings(settings) {
+  localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
+}
+
+function getErrorBook() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.errorBook) || '[]'); } 
+  catch(e) { return []; }
+}
+
+function saveErrorBook(book) {
+  localStorage.setItem(STORAGE_KEYS.errorBook, JSON.stringify(book));
+}
+
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.history) || '[]'); } 
+  catch(e) { return []; }
+}
+
+function saveHistory(history) {
+  localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(history));
+}
+
+function getDictatedWords() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.dictated) || '[]'); }
+  catch(e) { return []; }
+}
+
+function saveDictatedWords(words) {
+  localStorage.setItem(STORAGE_KEYS.dictated, JSON.stringify(words));
+}
+
+function getStats() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.stats) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function saveStats(stats) {
+  localStorage.setItem(STORAGE_KEYS.stats, JSON.stringify(stats));
+}
+
+function loadSettings() {
+  const settings = getSettings();
+  if (settings.defaultRatio) document.getElementById('ratio').value = settings.defaultRatio;
+  if (settings.defaultReviewRatio) document.getElementById('reviewRatio').value = settings.defaultReviewRatio;
+  if (settings.defaultPhraseRatio !== undefined) document.getElementById('phraseRatio').value = settings.defaultPhraseRatio;
+  updateRatioDisplay();
+  updateReviewRatioDisplay();
+  updatePhraseRatioDisplay();
+}
+
+// ===== Tab Switching =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+// ===== Mode Selection =====
+function selectMode(mode, el) {
+  dictationMode = mode;
+  document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  
+  // Show/hide review ratio
+  document.getElementById('reviewRatio').parentElement.style.opacity = mode === 'review' ? '1' : '0.5';
+}
+
+// ===== Word Count Display =====
+function updateWordCount() {
+  const start = parseInt(document.getElementById('rangeStart').value) || 1;
+  const end = parseInt(document.getElementById('rangeEnd').value) || 326;
+  
+  // We don't have page numbers in the data, so count all words
+  // Approximate by assuming even distribution across 326 pages
+  const ratio = (end - start + 1) / 326;
+  const totalInRange = Math.round(vocabData.length * ratio);
+  
+  document.getElementById('setupWordCount').textContent = '范围内约 ' + totalInRange + ' 词可选';
+}
+
+// ===== Ratio Display =====
+function updateRatioDisplay() {
+  document.getElementById('ratioValue').textContent = document.getElementById('ratio').value + '%';
+  updateWordCount();
+}
+
+function updateReviewRatioDisplay() {
+  document.getElementById('reviewRatioValue').textContent = document.getElementById('reviewRatio').value + '%';
+}
+
+function updatePhraseRatioDisplay() {
+  document.getElementById('phraseRatioValue').textContent = document.getElementById('phraseRatio').value + '%';
+}
+
+// ===== Shuffle Array =====
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ===== Start Dictation =====
+function startDictation() {
+  const settings = getSettings();
+  const ratio = parseInt(document.getElementById('ratio').value) / 100;
+  const reviewRatio = parseInt(document.getElementById('reviewRatio').value) / 100;
+  const maxCount = parseInt(document.getElementById('maxCount').value) || 0;
+  const noRepeatDays = settings.noRepeatDays || parseInt(document.getElementById('noRepeatDays').value) || 3;
+  const errorPriority = settings.errorPriority || document.getElementById('errorPriority').value || 'high';
+  
+  // Get all available words
+  let pool = [...vocabData];
+  
+  if (dictationMode === 'review') {
+    // Review mode: mix of error book words + old dictated words
+    let reviewPool = [];
+    
+    // 1. Get words from error book
+    const errorBook = getErrorBook();
+    const errorWords = errorBook.map(e => {
+      const wordData = vocabData.find(v => v.w === e.word);
+      return wordData || { w: e.word, p: e.phonetic, s: e.pos, m: e.meaning };
+    });
+    
+    // 2. Get old dictated words (not in recent days)
+    const dictated = getDictatedWords();
+    const now = Date.now();
+    const cutoffTime = now - (noRepeatDays * 24 * 60 * 60 * 1000);
+    
+    const oldDictated = dictated.filter(d => {
+      const lastDate = new Date(d.lastDate).getTime();
+      return lastDate < cutoffTime;
+    });
+    
+    // Get word data for old dictated words
+    const oldDictatedWords = oldDictated.map(d => {
+      return vocabData.find(v => v.w === d.word) || { w: d.word, p: '', s: d.pos, m: d.meaning };
+    }).filter(w => w && w.m);
+    
+    // 3. Combine: error words first, then sample from old dictated
+    if (errorPriority === 'high') {
+      reviewPool = [...errorWords];
+      // Sample a small portion from old dictated words
+      const sampleSize = Math.floor(oldDictatedWords.length * reviewRatio);
+      reviewPool = reviewPool.concat(shuffle(oldDictatedWords).slice(0, sampleSize));
+    } else {
+      // Mix equally
+      reviewPool = [...errorWords, ...oldDictatedWords];
+    }
+    
+    // Deduplicate
+    const seen = new Set();
+    reviewPool = reviewPool.filter(w => {
+      if (seen.has(w.w)) return false;
+      seen.add(w.w);
+      return true;
+    });
+    
+    pool = reviewPool;
+    
+    if (pool.length === 0) {
+      showToast('没有可复习的单词，请先进行新词默写！', 'error');
+      return;
+    }
+  } else {
+    // New word mode: exclude recently dictated words
+    const dictated = getDictatedWords();
+    const now = Date.now();
+    const cutoffTime = now - (noRepeatDays * 24 * 60 * 60 * 1000);
+    
+    const recentWords = new Set(
+      dictated.filter(d => new Date(d.lastDate).getTime() >= cutoffTime).map(d => d.word)
+    );
+    
+    // Also exclude words in error book (they'll be reviewed separately)
+    const errorWords = new Set(getErrorBook().map(e => e.word));
+    
+    pool = pool.filter(w => !recentWords.has(w.w) && !errorWords.has(w.w));
+    
+    if (pool.length === 0) {
+      showToast('范围内的新词已全部默写过，请尝试复习模式或调整设置！', 'error');
+      return;
+    }
+  }
+  
+  // Calculate count based on ratio
+  let count = Math.floor(pool.length * ratio);
+  if (maxCount > 0 && count > maxCount) count = maxCount;
+  count = Math.max(1, Math.min(count, pool.length));
+  
+  if (dictationMode === 'review') {
+    // 复习模式：混合抽取
+    currentQuestions = shuffle(pool).slice(0, count);
+  } else {
+    // 新词模式：按词组占比分配单词与词组
+    const phraseRatioVal = parseInt(document.getElementById('phraseRatio').value) / 100;
+    const wordPool = pool.filter(w => w.t !== 'phrase');
+    const phrasePool = pool.filter(w => w.t === 'phrase');
+    // 优先满足词组数量，不足部分用单词补齐
+    let phraseCount = Math.round(count * phraseRatioVal);
+    phraseCount = Math.min(phraseCount, phrasePool.length);
+    const wordCount2 = count - phraseCount;
+    const pickedWords = shuffle(wordPool).slice(0, wordCount2);
+    // 单词不足时用词组补齐
+    const pickedPhrases = shuffle(phrasePool).slice(0, phraseCount + Math.max(0, wordCount2 - pickedWords.length));
+    currentQuestions = shuffle(pickedWords.concat(pickedPhrases));
+  }
+  currentIndex = 0;
+  dictationResults = [];
+  dictationStartTime = Date.now();
+  
+  // Show dictation UI
+  document.getElementById('dictation-setup').style.display = 'none';
+  document.getElementById('dictation-result').style.display = 'none';
+  document.getElementById('dictation-active').style.display = 'block';
+  
+  // Update mode badge
+  const badge = document.getElementById('modeBadge');
+  if (dictationMode === 'review') {
+    badge.textContent = '复习默写';
+    badge.className = 'review-badge';
+  } else {
+    badge.textContent = '新词默写';
+    badge.className = 'new-badge';
+  }
+  
+  document.getElementById('dictTotal').textContent = currentQuestions.length;
+  showQuestion();
+}
+
+// ===== Show Question =====
+function showQuestion() {
+  if (currentIndex >= currentQuestions.length) {
+    finishDictation();
+    return;
+  }
+  
+  const q = currentQuestions[currentIndex];
+  answeredThisRound = false;
+  currentHint = '';
+  
+  // Update progress
+  document.getElementById('dictCurrent').textContent = currentIndex + 1;
+  document.getElementById('dictProgress').style.width = 
+    ((currentIndex / currentQuestions.length) * 100) + '%';
+  
+  // Show question
+  document.getElementById('questionPos').textContent = q.s || '—';
+  document.getElementById('questionMeaning').textContent = q.m || '—';
+  // 默写界面不显示音标（用户需求），但可保留在结果页
+  document.getElementById('questionPhonetic').textContent = '';
+  
+  // 词组提示：由几个单词组成
+  if (q.t === 'phrase') {
+    const wordCount = q.w.trim().split(/\s+/).length;
+    document.getElementById('questionHint').textContent = '这是一个词组，由 ' + wordCount + ' 个单词组成';
+  } else {
+    document.getElementById('questionHint').textContent = '输入英文单词或词组，按回车键提交';
+  }
+  
+  // Reset input
+  const input = document.getElementById('answerInput');
+  input.value = '';
+  input.className = 'answer-input';
+  input.disabled = false;
+  input.focus();
+  
+  // Hide hint button initially
+  document.querySelector('[onclick="showHint()"]').style.display = '';
+}
+
+// ===== Submit Answer =====
+function checkEnter(e) {
+  if (e.key === 'Enter' && !answeredThisRound) {
+    submitAnswer();
+  }
+}
+
+function submitAnswer() {
+  if (answeredThisRound) return;
+  if (currentIndex >= currentQuestions.length) return;
+  
+  const input = document.getElementById('answerInput');
+  const userAnswer = input.value.trim().toLowerCase();
+  
+  if (!userAnswer) {
+    showToast('请输入答案或点击"跳过"', 'error');
+    return;
+  }
+  
+  answeredThisRound = true;
+  const q = currentQuestions[currentIndex];
+  const correctAnswer = q.w.toLowerCase();
+  
+  const isCorrect = compareAnswers(userAnswer, correctAnswer);
+  
+  // Visual feedback
+  input.classList.add(isCorrect ? 'correct' : 'wrong');
+  input.disabled = true;
+  
+  // Record result
+  dictationResults.push({
+    word: q.w,
+    phonetic: q.p,
+    pos: q.s,
+    meaning: q.m,
+    userAnswer: input.value.trim(),
+    correct: isCorrect,
+    mode: dictationMode
+  });
+  
+  // Update dictated words record
+  updateDictatedWord(q.w, q.p, q.s, q.m, isCorrect);
+  
+  // If wrong, add to error book
+  if (!isCorrect) {
+    addError(q.w, q.p, q.s, q.m, input.value.trim());
+  }
+  
+  // Auto-advance after delay
+  setTimeout(() => {
+    currentIndex++;
+    showQuestion();
+  }, 1500);
+}
+
+function compareAnswers(user, correct) {
+  // Normalize: lowercase, trim, remove extra spaces
+  user = user.toLowerCase().trim().replace(/\s+/g, ' ');
+  correct = correct.toLowerCase().trim().replace(/\s+/g, ' ');
+  
+  // Exact match
+  if (user === correct) return true;
+  
+  // Handle "advertisement / ad" type entries - accept any variant
+  if (correct.includes('/')) {
+    const variants = correct.split('/').map(v => v.trim());
+    if (variants.includes(user)) return true;
+  }
+  
+  // Handle "bicycle / bike" etc.
+  if (correct.includes(' / ')) {
+    const variants = correct.split(' / ').map(v => v.trim());
+    if (variants.includes(user)) return true;
+  }
+  
+  // 词组答案比对：去掉省略号 "…"、尾部括号注释 "(to do)" 等
+  // 例：correct = "take action (to do)"，用户答 "take action" 也算对
+  const stripCorrect = correct
+    .replace(/…+/g, '')
+    .replace(/\s*[（(][^)）]*[)）]\s*$/g, '')
+    .replace(/\s*\/\s*$/g, '')
+    .trim();
+  if (stripCorrect && stripCorrect !== correct && user === stripCorrect) return true;
+  
+  // 词组变体：abandon the hope of… 用户答 abandon the hope of 也算对
+  const strippedUser = user.replace(/…+/g, '').trim();
+  const strippedCorrect2 = correct.replace(/…+/g, '').trim();
+  if (strippedUser === strippedCorrect2) return true;
+  
+  // Ignore punctuation differences
+  const cleanUser = user.replace(/[^a-z0-9\s]/g, '');
+  const cleanCorrect = correct.replace(/[^a-z0-9\s]/g, '');
+  if (cleanUser === cleanCorrect) return true;
+  
+  return false;
+}
+
+// ===== Skip Word =====
+function skipWord() {
+  if (currentIndex >= currentQuestions.length) return;
+  
+  const q = currentQuestions[currentIndex];
+  
+  // Record as wrong (skipped)
+  dictationResults.push({
+    word: q.w,
+    phonetic: q.p,
+    pos: q.s,
+    meaning: q.m,
+    userAnswer: '(跳过)',
+    correct: false,
+    mode: dictationMode,
+    skipped: true
+  });
+  
+  updateDictatedWord(q.w, q.p, q.s, q.m, false);
+  addError(q.w, q.p, q.s, q.m, '(跳过)');
+  
+  currentIndex++;
+  showQuestion();
+}
+
+// ===== Show Hint =====
+function showHint() {
+  if (currentIndex >= currentQuestions.length) return;
+  const q = currentQuestions[currentIndex];
+  const word = q.w;
+  
+  if (!currentHint) {
+    currentHint = word[0];
+  } else if (currentHint.length < word.length - 1) {
+    currentHint += word[currentHint.length];
+  } else {
+    currentHint = word.slice(0, -1) + '_';
+  }
+  
+  document.getElementById('questionHint').textContent = '提示：' + currentHint + '...';
+}
+
+// ===== Quit Dictation =====
+function quitDictation() {
+  if (dictationResults.length > 0) {
+    if (confirm('当前默写尚未完成，确定退出吗？已完成的部分将不计入记录。')) {
+      document.getElementById('dictation-active').style.display = 'none';
+      document.getElementById('dictation-setup').style.display = 'block';
+      updateNavbarStats();
+    }
+  } else {
+    document.getElementById('dictation-active').style.display = 'none';
+    document.getElementById('dictation-setup').style.display = 'block';
+  }
+}
+
+// ===== Finish Dictation =====
+function finishDictation() {
+  const endTime = Date.now();
+  const duration = Math.round((endTime - dictationStartTime) / 1000);
+  
+  // Calculate stats
+  const correct = dictationResults.filter(r => r.correct).length;
+  const wrong = dictationResults.filter(r => !r.correct).length;
+  const rate = dictationResults.length > 0 ? Math.round((correct / dictationResults.length) * 100) : 0;
+  
+  // Save history
+  const history = getHistory();
+  history.unshift({
+    date: new Date().toISOString(),
+    mode: dictationMode,
+    total: dictationResults.length,
+    correct: correct,
+    wrong: wrong,
+    rate: rate,
+    duration: duration,
+    details: dictationResults
+  });
+  saveHistory(history);
+  
+  // Update overall stats
+  const stats = getStats();
+  stats.totalDictated = (stats.totalDictated || 0) + dictationResults.length;
+  stats.totalCorrect = (stats.totalCorrect || 0) + correct;
+  stats.totalWrong = (stats.totalWrong || 0) + wrong;
+  saveStats(stats);
+  
+  // Show results
+  document.getElementById('dictation-active').style.display = 'none';
+  document.getElementById('dictation-result').style.display = 'block';
+  
+  document.getElementById('resultCorrect').textContent = correct;
+  document.getElementById('resultWrong').textContent = wrong;
+  document.getElementById('resultRate').textContent = rate + '%';
+  document.getElementById('resultTime').textContent = formatTime(duration);
+  
+  // Show details
+  const detailsHtml = dictationResults.map(r => `
+    <div class="result-card ${r.correct ? 'correct' : 'wrong'}">
+      <div class="result-icon">${r.correct ? '✓' : '✗'}</div>
+      <div class="result-content">
+        <div class="result-word">${r.word}</div>
+        ${r.phonetic ? `<div class="result-phonetic">/${r.phonetic}/</div>` : ''}
+        <div class="result-meaning">${r.pos || ''} ${r.meaning}</div>
+        ${!r.correct ? `<div class="result-your-answer">你的答案：${r.userAnswer}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('resultDetails').innerHTML = detailsHtml;
+  
+  updateNavbarStats();
+  renderErrorBook();
+  renderHistory();
+}
+
+// ===== Reset Dictation =====
+function resetDictation() {
+  document.getElementById('dictation-result').style.display = 'none';
+  document.getElementById('dictation-setup').style.display = 'block';
+}
+
+// ===== Update Dictated Word =====
+function updateDictatedWord(word, phonetic, pos, meaning, isCorrect) {
+  const dictated = getDictatedWords();
+  const existing = dictated.find(d => d.word === word);
+  const now = new Date().toISOString();
+  
+  if (existing) {
+    existing.lastDate = now;
+    existing.times = (existing.times || 0) + 1;
+    existing.correctCount = (existing.correctCount || 0) + (isCorrect ? 1 : 0);
+    existing.wrongCount = (existing.wrongCount || 0) + (isCorrect ? 0 : 1);
+  } else {
+    dictated.push({
+      word: word,
+      phonetic: phonetic,
+      pos: pos,
+      meaning: meaning,
+      firstDate: now,
+      lastDate: now,
+      times: 1,
+      correctCount: isCorrect ? 1 : 0,
+      wrongCount: isCorrect ? 0 : 1
+    });
+  }
+  
+  saveDictatedWords(dictated);
+}
+
+// ===== Error Book =====
+function addError(word, phonetic, pos, meaning, userAnswer) {
+  const errorBook = getErrorBook();
+  const existing = errorBook.find(e => e.word === word);
+  const now = new Date().toISOString();
+  
+  if (existing) {
+    existing.errorCount = (existing.errorCount || 0) + 1;
+    existing.lastErrorDate = now;
+    existing.lastWrongAnswer = userAnswer;
+  } else {
+    errorBook.push({
+      word: word,
+      phonetic: phonetic,
+      pos: pos,
+      meaning: meaning,
+      firstErrorDate: now,
+      lastErrorDate: now,
+      errorCount: 1,
+      lastWrongAnswer: userAnswer
+    });
+  }
+  
+  saveErrorBook(errorBook);
+}
+
+function renderErrorBook() {
+  const errorBook = getErrorBook().sort((a, b) => b.errorCount - a.errorCount);
+  
+  document.getElementById('errorBookCount').textContent = errorBook.length + ' 题';
+  document.getElementById('totalErrors').textContent = errorBook.length;
+  
+  if (errorBook.length === 0) {
+    document.getElementById('errorList').innerHTML = '<div class="error-empty">错题册为空，快去默写吧！</div>';
+    return;
+  }
+  
+  const html = errorBook.map((e, i) => `
+    <div class="error-item">
+      <div class="word-col">
+        <div class="word">${e.word}</div>
+        ${e.phonetic ? `<div class="phonetic">/${e.phonetic}/</div>` : ''}
+        <div class="meaning">${e.pos || ''} ${e.meaning || ''}</div>
+        <div class="last-date">错误 ${e.errorCount} 次 · 上次：${formatDate(e.lastErrorDate)}</div>
+      </div>
+      <div class="count">${e.errorCount}</div>
+      <button class="remove-btn" onclick="removeError('${e.word.replace(/'/g, "\\'")}')">✕</button>
+    </div>
+  `).join('');
+  
+  document.getElementById('errorList').innerHTML = html;
+}
+
+function removeError(word) {
+  let errorBook = getErrorBook();
+  errorBook = errorBook.filter(e => e.word !== word);
+  saveErrorBook(errorBook);
+  renderErrorBook();
+  updateNavbarStats();
+  showToast('已从错题册移除', 'success');
+}
+
+function clearAllErrors() {
+  if (confirm('确定清空错题册吗？此操作不可撤销。')) {
+    saveErrorBook([]);
+    renderErrorBook();
+    updateNavbarStats();
+    showToast('错题册已清空', 'success');
+  }
+}
+
+function reviewErrors() {
+  const errorBook = getErrorBook();
+  if (errorBook.length === 0) {
+    showToast('错题册为空，无需复习', 'error');
+    return;
+  }
+  
+  // Switch to dictation tab and start review
+  switchTab('dictation');
+  selectMode('review', document.querySelectorAll('.mode-option')[1]);
+  
+  // Set ratio to 100% for error review
+  document.getElementById('ratio').value = 100;
+  updateRatioDisplay();
+  
+  setTimeout(() => startDictation(), 300);
+}
+
+function exportErrors() {
+  const errorBook = getErrorBook();
+  if (errorBook.length === 0) {
+    showToast('错题册为空', 'error');
+    return;
+  }
+  
+  const dataStr = JSON.stringify(errorBook, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `错题册_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('错题已导出', 'success');
+}
+
+// ===== History =====
+function renderHistory() {
+  const history = getHistory();
+  
+  document.getElementById('historyCount').textContent = history.length + ' 次';
+  
+  // Update total dictated count
+  const stats = getStats();
+  document.getElementById('totalDictated').textContent = stats.totalDictated || 0;
+  
+  // Calculate overall accuracy
+  const accuracy = stats.totalDictated ? 
+    Math.round((stats.totalCorrect / stats.totalDictated) * 100) : 0;
+  document.getElementById('totalAccuracy').textContent = accuracy + '%';
+  
+  if (history.length === 0) {
+    document.getElementById('historyList').innerHTML = '<div class="error-empty">暂无默写记录</div>';
+    return;
+  }
+  
+  const html = history.map(h => `
+    <div class="history-item">
+      <div class="date">${formatDateTime(h.date)}</div>
+      <div class="type ${h.mode === 'review' ? 'review' : 'new'}">${h.mode === 'review' ? '复习' : '新词'}</div>
+      <div class="stats">
+        <span>共 ${h.total} 词</span>
+        <span class="correct">✓ ${h.correct}</span>
+        <span class="wrong">✗ ${h.wrong}</span>
+        <span class="rate">正确率 ${h.rate}%</span>
+        <span>用时 ${formatTime(h.duration)}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  document.getElementById('historyList').innerHTML = html;
+}
+
+function clearHistory() {
+  if (confirm('确定清空所有默写记录吗？此操作不可撤销。')) {
+    saveHistory([]);
+    localStorage.removeItem(STORAGE_KEYS.stats);
+    renderHistory();
+    updateNavbarStats();
+    showToast('记录已清空', 'success');
+  }
+}
+
+// ===== Word List =====
+function renderWordList() {
+  const tbody = document.getElementById('wordTableBody');
+  const html = vocabData.map((w, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td class="word-col">${w.w}${w.t === 'phrase' ? ' <span class="phrase-badge">词组</span>' : ''}</td>
+      <td class="phonetic-col">${w.p ? '/' + w.p + '/' : ''}</td>
+      <td class="pos-col">${w.s || ''}</td>
+      <td class="meaning-col">${w.m}</td>
+    </tr>
+  `).join('');
+  tbody.innerHTML = html;
+}
+
+function filterWordList() {
+  const query = document.getElementById('wordSearch').value.toLowerCase().trim();
+  const filtered = vocabData.filter(w => 
+    w.w.toLowerCase().includes(query) || (w.m || '').toLowerCase().includes(query)
+  );
+  
+  const tbody = document.getElementById('wordTableBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#999;">未找到匹配的单词</td></tr>';
+    return;
+  }
+  
+  const html = filtered.map((w, i) => `
+    <tr>
+      <td>${vocabData.indexOf(w) + 1}</td>
+      <td class="word-col">${w.w}${w.t === 'phrase' ? ' <span class="phrase-badge">词组</span>' : ''}</td>
+      <td class="phonetic-col">${w.p ? '/' + w.p + '/' : ''}</td>
+      <td class="pos-col">${w.s || ''}</td>
+      <td class="meaning-col">${w.m}</td>
+    </tr>
+  `).join('');
+  tbody.innerHTML = html;
+  const pc = filtered.filter(w => w.t === 'phrase').length;
+  document.getElementById('wordListCount').textContent = (filtered.length - pc) + ' 词 + ' + pc + ' 词组';
+}
+
+// ===== Navbar Stats =====
+function updateNavbarStats() {
+  const stats = getStats();
+  document.getElementById('totalDictated').textContent = stats.totalDictated || 0;
+  document.getElementById('totalErrors').textContent = getErrorBook().length;
+  const accuracy = stats.totalDictated ? 
+    Math.round((stats.totalCorrect / stats.totalDictated) * 100) : 0;
+  document.getElementById('totalAccuracy').textContent = accuracy + '%';
+}
+
+// ===== Data Export/Import =====
+function exportData() {
+  const data = {
+    errorBook: getErrorBook(),
+    history: getHistory(),
+    dictatedWords: getDictatedWords(),
+    stats: getStats(),
+    settings: getSettings(),
+    exportDate: new Date().toISOString()
+  };
+  
+  const dataStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `单词默写数据备份_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('数据已导出', 'success');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.errorBook) saveErrorBook(data.errorBook);
+      if (data.history) saveHistory(data.history);
+      if (data.dictatedWords) saveDictatedWords(data.dictatedWords);
+      if (data.stats) saveStats(data.stats);
+      if (data.settings) saveSettings(data.settings);
+      
+      init();
+      showToast('数据导入成功', 'success');
+    } catch(err) {
+      showToast('导入失败：文件格式错误', 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetAllData() {
+  if (confirm('确定重置全部数据吗？这将清空错题册、默写记录和所有统计数据，此操作不可撤销。')) {
+    Object.values(STORAGE_KEYS).forEach(key => localStorage.removeItem(key));
+    init();
+    showToast('全部数据已重置', 'success');
+  }
+}
+
+// ===== Toast =====
+function showToast(msg, type) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show ' + (type || '');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ===== Utility =====
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diff = (now - d) / (1000 * 60 * 60 * 24);
+  
+  if (diff < 1) return '今天';
+  if (diff < 2) return '昨天';
+  if (diff < 3) return '前天';
+  if (diff < 7) return Math.floor(diff) + ' 天前';
+  return `${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+function formatDateTime(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+function formatTime(seconds) {
+  if (seconds < 60) return seconds + 's';
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return m + 'm' + (s > 0 ? s + 's' : '');
+}
+
+// ===== Global Keyboard Shortcuts =====
+document.addEventListener('keydown', function(e) {
+  const activeEl = document.activeElement;
+  const inInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT');
+  
+  // 答题中：输入框内有焦点时，←/→ 应正常移动光标，不做跳过
+  const dictationActive = document.getElementById('dictation-active') && 
+    document.getElementById('dictation-active').style.display !== 'none';
+  const resultVisible = document.getElementById('dictation-result') && 
+    document.getElementById('dictation-result').style.display !== 'none';
+  
+if (dictationActive) {
+    // 默写阶段
+    if (e.key === 'Enter' && !inInput) {
+      e.preventDefault();
+      submitAnswer();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      quitDictation();
+    } else if (e.key === 'Tab' && !inInput) {
+      // 未聚焦输入框时 Tab 触发提示
+      e.preventDefault();
+      showHint();
+    } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !inInput) {
+      // 未聚焦输入框时，←/→ 跳过本题
+      e.preventDefault();
+      skipWord();
+    } else if (e.key === 'Tab' && inInput) {
+      // 输入框聚焦时：若输入为空则 Tab 触发提示，否则保持默认（跳转焦点）
+      const input = document.getElementById('answerInput');
+      if (input && input.value === '' && !input.disabled) {
+        e.preventDefault();
+        showHint();
+      }
+    }
+    // 注意：输入框聚焦时 Enter 已由 checkEnter 处理，这里不重复
+    return;
+  }
+  
+  if (resultVisible) {
+    // 结果页：R 再来一轮，E 查看错题册，Enter 再来一轮
+    if (e.key === 'r' || e.key === 'R') {
+      resetDictation();
+    } else if (e.key === 'e' || e.key === 'E') {
+      switchTab('errorbook');
+    } else if (e.key === 'Enter' && !inInput) {
+      resetDictation();
+    }
+    return;
+  }
+  
+  // 设置页：无特殊快捷键（避免与输入冲突）
+});
+
+// ===== Save Settings on Change =====
+document.getElementById('defaultRatio').addEventListener('change', function() {
+  const settings = getSettings();
+  settings.defaultRatio = parseInt(this.value);
+  saveSettings(settings);
+});
+
+document.getElementById('defaultReviewRatio').addEventListener('change', function() {
+  const settings = getSettings();
+  settings.defaultReviewRatio = parseInt(this.value);
+  saveSettings(settings);
+});
+
+document.getElementById('defaultPhraseRatio').addEventListener('change', function() {
+  const settings = getSettings();
+  settings.defaultPhraseRatio = parseInt(this.value);
+  saveSettings(settings);
+});
+
+document.getElementById('noRepeatDays').addEventListener('change', function() {
+  const settings = getSettings();
+  settings.noRepeatDays = parseInt(this.value);
+  saveSettings(settings);
+});
+
+document.getElementById('errorPriority').addEventListener('change', function() {
+  const settings = getSettings();
+  settings.errorPriority = this.value;
+  saveSettings(settings);
+});
+
+// ===== Init =====
+init();
+</script>
+
+</body>
+</html>
