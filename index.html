@@ -1126,16 +1126,32 @@ function updateWordCount() {
       + '<span style="color:#999;font-size:11px">（错题 ' + errorWords.length + ' + 旧词抽 ' + oldSample + '）</span>';
   } else {
     // 新词模式：池 × 比例，受上限约束
+    // 与 startDictation 一致：排除近期已默写(noRepeatDays内)与错题册中的词
     const ratio = parseInt(document.getElementById('ratio').value) / 100;
     const maxCount = parseInt(document.getElementById('maxCount').value) || 0;
-    let expected = Math.floor(totalInRange * ratio);
+    const noRepeatDays = getSettings().noRepeatDays || 3;
+    const now = Date.now();
+    const cutoffTime = now - (noRepeatDays * 24 * 60 * 60 * 1000);
+    
+    const dictated = getDictatedWords();
+    const recentWords = new Set(
+      dictated.filter(d => new Date(d.lastDate).getTime() >= cutoffTime).map(d => d.word)
+    );
+    const errorWordsSet = new Set(getErrorBook().map(e => e.word));
+    const available = vocabData.filter(v =>
+      v.page >= start && v.page <= end &&
+      !recentWords.has(v.w) && !errorWordsSet.has(v.w)
+    );
+    
+    let expected = Math.floor(available.length * ratio);
     let capped = false;
     if (maxCount > 0 && expected > maxCount) {
       expected = maxCount;
       capped = true;
     }
     badge.innerHTML = '范围内 ' + totalInRange + ' 词可选 · 本次预计 <strong>' + expected + '</strong> 词'
-      + (capped ? ' <span style="color:#e6a23c">(已达上限)</span>' : '');
+      + (capped ? ' <span style="color:#e6a23c">(已达上限)</span>' : '')
+      + '<span style="color:#999;font-size:11px">（剔除近期已默 ' + (totalInRange - available.length) + ' 词）</span>';
   }
 }
 
