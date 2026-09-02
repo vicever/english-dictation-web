@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>英语单词默写系统 - 东昌中学词汇手册</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1091,10 +1090,8 @@ function updateWordCount() {
   const start = parseInt(document.getElementById('rangeStart').value) || 1;
   const end = parseInt(document.getElementById('rangeEnd').value) || 326;
   
-  // We don't have page numbers in the data, so count all words
-  // Approximate by assuming even distribution across 326 pages
-  const ratio = (end - start + 1) / 326;
-  const totalInRange = Math.round(vocabData.length * ratio);
+  // 按词库中的 page 字段精确筛选
+  const totalInRange = vocabData.filter(v => v.page >= start && v.page <= end).length;
   
   document.getElementById('setupWordCount').textContent = '范围内约 ' + totalInRange + ' 词可选';
 }
@@ -1132,8 +1129,10 @@ function startDictation() {
   const noRepeatDays = settings.noRepeatDays || parseInt(document.getElementById('noRepeatDays').value) || 3;
   const errorPriority = settings.errorPriority || document.getElementById('errorPriority').value || 'high';
   
-  // Get all available words
-  let pool = [...vocabData];
+  // Get all available words — 按页码范围筛选
+  const pageStart = parseInt(document.getElementById('rangeStart').value) || 1;
+  const pageEnd = parseInt(document.getElementById('rangeEnd').value) || 326;
+  let pool = vocabData.filter(v => v.page >= pageStart && v.page <= pageEnd);
   
   if (dictationMode === 'review') {
     // Review mode: mix of error book words + old dictated words
