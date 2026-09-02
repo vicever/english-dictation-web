@@ -1083,6 +1083,9 @@ function selectMode(mode, el) {
   
   // Show/hide review ratio
   document.getElementById('reviewRatio').parentElement.style.opacity = mode === 'review' ? '1' : '0.5';
+  
+  // 刷新预计题量显示
+  updateWordCount();
 }
 
 // ===== Word Count Display =====
@@ -1092,8 +1095,48 @@ function updateWordCount() {
   
   // 按词库中的 page 字段精确筛选
   const totalInRange = vocabData.filter(v => v.page >= start && v.page <= end).length;
+  const badge = document.getElementById('setupWordCount');
   
-  document.getElementById('setupWordCount').textContent = '范围内约 ' + totalInRange + ' 词可选';
+  if (dictationMode === 'review') {
+    // 复习模式：错题册(范围内) + 旧词按复习比例抽取（受上限约束）
+    const reviewRatio = parseInt(document.getElementById('reviewRatio').value) / 100;
+    const maxCount = parseInt(document.getElementById('maxCount').value) || 0;
+    const noRepeatDays = getSettings().noRepeatDays || 3;
+    const now = Date.now();
+    const cutoffTime = now - (noRepeatDays * 24 * 60 * 60 * 1000);
+    
+    const errorBook = getErrorBook();
+    // 错题册中在页码范围内的词
+    const errorWords = errorBook.filter(e => {
+      const v = vocabData.find(x => x.w === e.word);
+      return v && v.page >= start && v.page <= end;
+    });
+    // 旧词（超出 noRepeatDays 且不重复）
+    const dictated = getDictatedWords();
+    const oldDictated = dictated.filter(d => new Date(d.lastDate).getTime() < cutoffTime);
+    const oldWords = oldDictated.map(d => vocabData.find(v => v.w === d.word)).filter(v => v && v.page >= start && v.page <= end);
+    const oldSample = Math.floor(oldWords.length * reviewRatio);
+    
+    let expected = errorWords.length + oldSample;
+    let capped = false;
+    if (maxCount > 0 && expected > maxCount) { expected = maxCount; capped = true; }
+    
+    badge.innerHTML = '范围内约 ' + totalInRange + ' 词可选 · 本次预计 <strong>' + expected + '</strong> 词'
+      + (capped ? ' <span style="color:#e6a23c">(已达上限)</span>' : '')
+      + '<span style="color:#999;font-size:11px">（错题 ' + errorWords.length + ' + 旧词抽 ' + oldSample + '）</span>';
+  } else {
+    // 新词模式：池 × 比例，受上限约束
+    const ratio = parseInt(document.getElementById('ratio').value) / 100;
+    const maxCount = parseInt(document.getElementById('maxCount').value) || 0;
+    let expected = Math.floor(totalInRange * ratio);
+    let capped = false;
+    if (maxCount > 0 && expected > maxCount) {
+      expected = maxCount;
+      capped = true;
+    }
+    badge.innerHTML = '范围内 ' + totalInRange + ' 词可选 · 本次预计 <strong>' + expected + '</strong> 词'
+      + (capped ? ' <span style="color:#e6a23c">(已达上限)</span>' : '');
+  }
 }
 
 // ===== Ratio Display =====
@@ -1104,6 +1147,7 @@ function updateRatioDisplay() {
 
 function updateReviewRatioDisplay() {
   document.getElementById('reviewRatioValue').textContent = document.getElementById('reviewRatio').value + '%';
+  updateWordCount();
 }
 
 function updatePhraseRatioDisplay() {
@@ -1135,17 +1179,17 @@ function startDictation() {
   let pool = vocabData.filter(v => v.page >= pageStart && v.page <= pageEnd);
   
   if (dictationMode === 'review') {
-    // Review mode: mix of error book words + old dictated words
+    // Review mode: mix of error book words + old dictated words（均在页码范围内）
     let reviewPool = [];
     
-    // 1. Get words from error book
+    // 1. Get words from error book (页码范围内)
     const errorBook = getErrorBook();
     const errorWords = errorBook.map(e => {
       const wordData = vocabData.find(v => v.w === e.word);
       return wordData || { w: e.word, p: e.phonetic, s: e.pos, m: e.meaning };
-    });
+    }).filter(w => w && w.page >= pageStart && w.page <= pageEnd);
     
-    // 2. Get old dictated words (not in recent days)
+    // 2. Get old dictated words (not in recent days, 页码范围内)
     const dictated = getDictatedWords();
     const now = Date.now();
     const cutoffTime = now - (noRepeatDays * 24 * 60 * 60 * 1000);
@@ -1158,7 +1202,7 @@ function startDictation() {
     // Get word data for old dictated words
     const oldDictatedWords = oldDictated.map(d => {
       return vocabData.find(v => v.w === d.word) || { w: d.word, p: '', s: d.pos, m: d.meaning };
-    }).filter(w => w && w.m);
+    }).filter(w => w && w.m && w.page >= pageStart && w.page <= pageEnd);
     
     // 3. Combine: error words first, then sample from old dictated
     if (errorPriority === 'high') {
@@ -1206,9 +1250,17 @@ function startDictation() {
     }
   }
   
-  // Calculate count based on ratio
-  let count = Math.floor(pool.length * ratio);
-  if (maxCount > 0 && count > maxCount) count = maxCount;
+  // Calculate count — 上限优先：count = min(候选池, 上限)
+  let count = pool.length;
+  if (dictationMode === 'review') {
+    // 复习模式：候选池已是（错题 + 旧词按复习比例抽样的合并池）
+    // 上限优先：不超上限
+    if (maxCount > 0 && count > maxCount) count = maxCount;
+  } else {
+    // 新词模式：池 × 抽取比例，再受上限约束
+    count = Math.floor(pool.length * ratio);
+    if (maxCount > 0 && count > maxCount) count = maxCount;
+  }
   count = Math.max(1, Math.min(count, pool.length));
   
   if (dictationMode === 'review') {
