@@ -625,7 +625,97 @@ kbd {
 }
 .mode-option .title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
 .mode-option .desc { font-size: 12px; color: var(--text-light); }
+
+/* Homework iframe */
+.hw-iframe-wrap {
+  width: 100%;
+  min-height: 700px;
+  position: relative;
+}
+.hw-iframe-wrap iframe {
+  width: 100%;
+  min-height: 700px;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* User modal */
+.user-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000;
+}
+.user-modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 400px;
+  width: calc(100% - 48px);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.user-modal h2 { font-size: 22px; margin-bottom: 12px; color: var(--text); }
+.user-modal p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.6; }
+.user-modal input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  margin-bottom: 16px;
+}
+.user-modal input:focus { border-color: var(--primary); }
+
+/* Sync status badge */
+.sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.sync-badge.synced { background: #f6ffed; color: var(--success); }
+.sync-badge.syncing { background: var(--primary-light); color: var(--primary); }
+.sync-badge.error { background: #fff2f0; color: var(--error); }
+.sync-badge.offline { background: #f5f5f5; color: #999; }
+.sync-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+.sync-badge.synced .sync-dot { background: var(--success); }
+.sync-badge.syncing .sync-dot { background: var(--primary); }
+.sync-badge.error .sync-dot { background: var(--error); }
+.sync-badge.offline .sync-dot { background: #ccc; animation: none; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* User management section */
+.user-section {
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.user-section .user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.user-section .user-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -650,6 +740,7 @@ kbd {
     <button class="tab" data-tab="errorbook" onclick="switchTab('errorbook')">错题册</button>
     <button class="tab" data-tab="history" onclick="switchTab('history')">默写记录</button>
     <button class="tab" data-tab="wordlist" onclick="switchTab('wordlist')">词库浏览</button>
+    <button class="tab" data-tab="homework" onclick="switchTab('homework')">作业乐园</button>
     <button class="tab" data-tab="settings" onclick="switchTab('settings')">设置</button>
   </div>
 
@@ -867,10 +958,31 @@ kbd {
     </div>
   </div>
 
+  <!-- Homework Tab -->
+  <div class="tab-content" id="tab-homework">
+    <div class="hw-iframe-wrap">
+      <iframe id="homeworkFrame" src="homework.html" allow="fullscreen"></iframe>
+    </div>
+  </div>
+
   <!-- Settings Tab -->
   <div class="tab-content" id="tab-settings">
     <div class="card">
       <div class="card-title">设置</div>
+      
+      <div class="user-section">
+        <div class="user-row">
+          <div>
+            <div style="font-size:12px;color:var(--text-light);margin-bottom:4px;">当前用户</div>
+            <div class="user-name" id="currentUserName">未登录</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <span class="sync-badge offline" id="syncBadge"><span class="sync-dot"></span><span id="syncText">未同步</span></span>
+            <button class="btn btn-outline btn-sm" onclick="switchUser()">切换用户</button>
+            <button class="btn btn-outline btn-sm" onclick="syncFromCloud(true)">立即同步</button>
+          </div>
+        </div>
+      </div>
       
       <div style="margin-bottom:24px;">
         <h3 style="font-size:16px; margin-bottom:12px;">数据管理</h3>
@@ -1019,6 +1131,7 @@ function getSettings() {
 
 function saveSettings(settings) {
   localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
+  scheduleDictationSync();
 }
 
 function getErrorBook() {
@@ -1028,6 +1141,7 @@ function getErrorBook() {
 
 function saveErrorBook(book) {
   localStorage.setItem(STORAGE_KEYS.errorBook, JSON.stringify(book));
+  scheduleDictationSync();
 }
 
 function getHistory() {
@@ -1037,6 +1151,7 @@ function getHistory() {
 
 function saveHistory(history) {
   localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(history));
+  scheduleDictationSync();
 }
 
 function getDictatedWords() {
@@ -1046,6 +1161,7 @@ function getDictatedWords() {
 
 function saveDictatedWords(words) {
   localStorage.setItem(STORAGE_KEYS.dictated, JSON.stringify(words));
+  scheduleDictationSync();
 }
 
 function getStats() {
@@ -1055,6 +1171,7 @@ function getStats() {
 
 function saveStats(stats) {
   localStorage.setItem(STORAGE_KEYS.stats, JSON.stringify(stats));
+  scheduleDictationSync();
 }
 
 function loadSettings() {
@@ -1982,8 +2099,186 @@ document.getElementById('errorPriority').addEventListener('change', function() {
   saveSettings(settings);
 });
 
+// ===== Supabase Cloud Sync =====
+const SUPABASE_URL = 'https://jagryvrbwvehffhgqsgr.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_xIGPANwI8ZeXPJW6SW8OEQ_rZj0MN0E';
+let supabaseClient = null;
+let currentUser = null;
+let syncTimer = null;
+let lastCloudSyncTime = 0;
+let isSyncing = false;
+let syncDebounceTimer = null;
+
+function initSupabase() {
+  try {
+    if (typeof supabase !== 'undefined' && typeof supabase.createClient === 'function') {
+      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  } catch(e) { console.warn('Supabase init failed:', e); }
+}
+
+function getCurrentUser() {
+  if (!currentUser) currentUser = localStorage.getItem('app_username') || '';
+  return currentUser;
+}
+
+function ensureUserOnLoad() {
+  const user = getCurrentUser();
+  if (!user) {
+    showUsernamePrompt();
+  } else {
+    updateUserDisplay();
+    initSupabase();
+    if (supabaseClient) {
+      syncFromCloud();
+      startPolling();
+    }
+  }
+}
+
+function showUsernamePrompt() {
+  const overlay = document.createElement('div');
+  overlay.className = 'user-modal-overlay';
+  overlay.innerHTML = '<div class="user-modal">' +
+    '<h2>欢迎使用</h2>' +
+    '<p>请输入用户名，用于多端数据同步<br>（同一用户名在不同设备上数据互通）</p>' +
+    '<input id="usernameInput" placeholder="输入用户名" maxlength="20" autocomplete="off">' +
+    '<button class="btn btn-primary btn-lg" onclick="confirmUsername()" style="width:100%;">确定</button>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  const input = overlay.querySelector('#usernameInput');
+  input.focus();
+  input.addEventListener('keydown', function(e) { if (e.key === 'Enter') confirmUsername(); });
+}
+
+function confirmUsername() {
+  const name = document.getElementById('usernameInput').value.trim();
+  if (!name) { alert('请输入用户名'); return; }
+  currentUser = name;
+  localStorage.setItem('app_username', name);
+  document.querySelector('.user-modal-overlay').remove();
+  updateUserDisplay();
+  initSupabase();
+  if (supabaseClient) {
+    syncFromCloud();
+    startPolling();
+  }
+  showToast('欢迎，' + name + '！', 'success');
+}
+
+function switchUser() {
+  const name = prompt('输入新的用户名：', getCurrentUser());
+  if (name && name.trim()) {
+    currentUser = name.trim();
+    localStorage.setItem('app_username', currentUser);
+    updateUserDisplay();
+    if (supabaseClient) {
+      syncFromCloud();
+    } else {
+      initSupabase();
+      if (supabaseClient) { syncFromCloud(); startPolling(); }
+    }
+    showToast('已切换到用户：' + currentUser, 'success');
+  }
+}
+
+function updateUserDisplay() {
+  const el = document.getElementById('currentUserName');
+  if (el) el.textContent = getCurrentUser() || '未登录';
+}
+
+function updateSyncStatus(status, text) {
+  const badge = document.getElementById('syncBadge');
+  const textEl = document.getElementById('syncText');
+  if (!badge) return;
+  badge.className = 'sync-badge ' + status;
+  if (textEl) textEl.textContent = text || ({synced:'已同步', syncing:'同步中...', error:'同步失败', offline:'未同步'}[status] || '');
+}
+
+function scheduleDictationSync() {
+  if (isSyncing) return;
+  if (syncDebounceTimer) clearTimeout(syncDebounceTimer);
+  syncDebounceTimer = setTimeout(uploadDictationData, 2000);
+}
+
+async function uploadDictationData() {
+  if (!supabaseClient || !getCurrentUser()) return;
+  isSyncing = true;
+  updateSyncStatus('syncing');
+  const data = {
+    errorBook: getErrorBook(),
+    history: getHistory(),
+    dictatedWords: getDictatedWords(),
+    stats: getStats(),
+    settings: getSettings()
+  };
+  try {
+    const { error } = await supabaseClient.from('app_data').upsert({
+      user_id: getCurrentUser(),
+      dictation: data,
+      updated_at: new Date().toISOString()
+    });
+    if (error) throw error;
+    lastCloudSyncTime = Date.now();
+    updateSyncStatus('synced');
+  } catch(e) {
+    console.warn('Upload failed:', e);
+    updateSyncStatus('error');
+  }
+  isSyncing = false;
+}
+
+async function syncFromCloud(manual) {
+  if (!supabaseClient || !getCurrentUser()) {
+    if (manual) showToast('请先登录用户', 'error');
+    return;
+  }
+  if (isSyncing && !manual) return;
+  isSyncing = true;
+  if (manual) updateSyncStatus('syncing');
+  try {
+    const { data, error } = await supabaseClient
+      .from('app_data')
+      .select('*')
+      .eq('user_id', getCurrentUser())
+      .single();
+    if (error) {
+      if (error.code === 'PGRST116') { /* no row yet, upload local */ isSyncing = false; uploadDictationData(); return; }
+      throw error;
+    }
+    if (data && data.dictation) {
+      const cloudTime = data.updated_at ? new Date(data.updated_at).getTime() : 0;
+      if (cloudTime > lastCloudSyncTime) {
+        lastCloudSyncTime = cloudTime;
+        const d = data.dictation;
+        if (d.errorBook) { localStorage.setItem(STORAGE_KEYS.errorBook, JSON.stringify(d.errorBook)); }
+        if (d.history) { localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(d.history)); }
+        if (d.dictatedWords) { localStorage.setItem(STORAGE_KEYS.dictated, JSON.stringify(d.dictatedWords)); }
+        if (d.stats) { localStorage.setItem(STORAGE_KEYS.stats, JSON.stringify(d.stats)); }
+        if (d.settings) { localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(d.settings)); }
+        init();
+        updateSyncStatus('synced', '已从云端同步');
+        if (manual) showToast('已从云端拉取最新数据', 'success');
+      } else {
+        updateSyncStatus('synced');
+      }
+    }
+  } catch(e) {
+    console.warn('Sync failed:', e);
+    updateSyncStatus('error');
+    if (manual) showToast('同步失败：' + (e.message || '未知错误'), 'error');
+  }
+  isSyncing = false;
+}
+
+function startPolling() {
+  if (syncTimer) clearInterval(syncTimer);
+  syncTimer = setInterval(function() { syncFromCloud(false); }, 30000);
+}
+
 // ===== Init =====
 init();
+ensureUserOnLoad();
 </script>
 
 </body>
