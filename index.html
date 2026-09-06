@@ -510,6 +510,7 @@ kbd {
 .word-table .word-col { font-weight: 600; }
 .word-table .phonetic-col { color: var(--text-light); font-style: italic; font-size: 13px; }
 .word-table .pos-col { color: var(--primary); font-size: 13px; }
+.word-table .page-col { color: var(--primary); font-size: 13px; text-align: center; font-weight: 600; }
 .word-table .meaning-col { color: var(--text); }
 .word-table-wrap {
   max-height: 600px;
@@ -949,6 +950,7 @@ kbd {
               <th>单词</th>
               <th>音标</th>
               <th>词性</th>
+              <th>页码</th>
               <th>释义</th>
             </tr>
           </thead>
@@ -1886,6 +1888,7 @@ function renderWordList() {
       <td class="word-col">${w.w}${w.t === 'phrase' ? ' <span class="phrase-badge">词组</span>' : ''}</td>
       <td class="phonetic-col">${w.p ? '/' + w.p + '/' : ''}</td>
       <td class="pos-col">${w.s || ''}</td>
+      <td class="page-col">${w.page || ''}</td>
       <td class="meaning-col">${w.m}</td>
     </tr>
   `).join('');
@@ -1900,7 +1903,7 @@ function filterWordList() {
   
   const tbody = document.getElementById('wordTableBody');
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#999;">未找到匹配的单词</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#999;">未找到匹配的单词</td></tr>';
     return;
   }
   
@@ -1910,6 +1913,7 @@ function filterWordList() {
       <td class="word-col">${w.w}${w.t === 'phrase' ? ' <span class="phrase-badge">词组</span>' : ''}</td>
       <td class="phonetic-col">${w.p ? '/' + w.p + '/' : ''}</td>
       <td class="pos-col">${w.s || ''}</td>
+      <td class="page-col">${w.page || ''}</td>
       <td class="meaning-col">${w.m}</td>
     </tr>
   `).join('');
