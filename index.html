@@ -1050,22 +1050,33 @@ kbd {
 // 词库数据从外部 vocab_data.json 加载（需通过本地 HTTP 服务器访问）
 window.VOCAB_DATA = null; // 加载完成前为 null
 window.VOCAB_LOADING = false;
+window.VOCAB_PROMISE = null; // 共享加载 Promise，避免并发调用重复加载/竞态
 
 async function loadVocabFromExternal() {
   if (window.VOCAB_DATA !== null) return window.VOCAB_DATA;
-  if (window.VOCAB_LOADING) return null;
+  // 若已有加载任务正在进行，直接复用同一 Promise，等待其完成
+  if (window.VOCAB_PROMISE) return window.VOCAB_PROMISE;
   window.VOCAB_LOADING = true;
+  window.VOCAB_PROMISE = (async () => {
+    try {
+      const resp = await fetch('vocab_data.json');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      window.VOCAB_DATA = await resp.json();
+      return window.VOCAB_DATA;
+    } catch(err) {
+      console.error('词库加载失败:', err);
+      // 显示加载失败提示
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;color:#333;"><div style="font-size:24px;margin-bottom:16px;">词库加载失败</div><div style="font-size:14px;color:#666;max-width:500px;text-align:center;line-height:1.8;">词库数据文件 (vocab_data.json) 加载失败。<br><br>可能原因：vocab_data.json 未与 HTML 文件放在同一目录，或服务器未正确部署该文件。<br><br>请检查文件部署后刷新页面。</div></div>';
+      throw err;
+    } finally {
+      window.VOCAB_LOADING = false;
+    }
+  })();
   try {
-    const resp = await fetch('vocab_data.json');
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    window.VOCAB_DATA = await resp.json();
-    window.VOCAB_LOADING = false;
-    return window.VOCAB_DATA;
+    return await window.VOCAB_PROMISE;
   } catch(err) {
-    window.VOCAB_LOADING = false;
-    console.error('词库加载失败:', err);
-    // 显示加载失败提示
-    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;color:#333;"><div style="font-size:24px;margin-bottom:16px;">词库加载失败</div><div style="font-size:14px;color:#666;max-width:500px;text-align:center;line-height:1.8;">词库数据文件 (vocab_data.json) 加载失败。<br><br>可能原因：vocab_data.json 未与 HTML 文件放在同一目录，或服务器未正确部署该文件。<br><br>请检查文件部署后刷新页面。</div></div>';
+    // 加载失败后清空 Promise，允许后续重试
+    window.VOCAB_PROMISE = null;
     return null;
   }
 }
@@ -1213,6 +1224,7 @@ function updateWordCount() {
   const end = parseInt(document.getElementById('rangeEnd').value) || 326;
   
   // 按词库中的 page 字段精确筛选
+  if (!Array.isArray(vocabData)) return; // 词库未加载完成时安全退出
   const totalInRange = vocabData.filter(v => v.page >= start && v.page <= end).length;
   const badge = document.getElementById('setupWordCount');
   
