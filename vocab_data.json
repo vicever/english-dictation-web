@@ -6304,6 +6304,14 @@
   "t": "word"
  },
  {
+  "w": "Barely had he come back when he went to sleep",
+  "p": "",
+  "s": "",
+  "m": "他一回来就去睡觉了。",
+  "page": 26,
+  "t": "phrase"
+ },
+ {
   "w": "bark",
   "p": "",
   "s": "n; vi",
@@ -7140,6 +7148,14 @@
   "p": "",
   "s": "",
   "m": "放松裤带",
+  "page": 29,
+  "t": "phrase"
+ },
+ {
+  "w": "China's Belt and Road Initiative",
+  "p": "",
+  "s": "",
+  "m": "中国的“一带一路”倡议",
   "page": 29,
   "t": "phrase"
  },
@@ -13376,6 +13392,14 @@
   "t": "phrase"
  },
  {
+  "w": "The People's Republic of China came into being in 1949",
+  "p": "",
+  "s": "",
+  "m": "中华人民共和国成立于 1949 年。",
+  "page": 56,
+  "t": "phrase"
+ },
+ {
   "w": "come into effect",
   "p": "",
   "s": "",
@@ -16056,6 +16080,14 @@
   "t": "phrase"
  },
  {
+  "w": "Qi Baishi achieved success by coupling talent",
+  "p": "",
+  "s": "",
+  "m": "天赋加上勤奋使齐白石取得成功。",
+  "page": 67,
+  "t": "phrase"
+ },
+ {
   "w": "courage",
   "p": "",
   "s": "",
@@ -17924,6 +17956,22 @@
   "p": "",
   "s": "",
   "m": "在某人所处的时代",
+  "page": 73,
+  "t": "phrase"
+ },
+ {
+  "w": "Mark Twain was seen as one of",
+  "p": "",
+  "s": "",
+  "m": "在他自己的时代，马克·吐温被视作美国最",
+  "page": 73,
+  "t": "phrase"
+ },
+ {
+  "w": "America's most famous writers",
+  "p": "",
+  "s": "",
+  "m": "著名的作家之一。",
   "page": 73,
   "t": "phrase"
  },
@@ -22704,7 +22752,23 @@
   "t": "word"
  },
  {
+  "w": "Korea and Japan drew",
+  "p": "",
+  "s": "",
+  "m": "韩国队与日本队战平。",
+  "page": 90,
+  "t": "phrase"
+ },
+ {
   "w": "Korea drew with/ against Japan",
+  "p": "",
+  "s": "",
+  "m": "韩国队与日本队战平。",
+  "page": 90,
+  "t": "phrase"
+ },
+ {
+  "w": "Korea drew the match against Japan",
   "p": "",
   "s": "",
   "m": "韩国队与日本队战平。",
@@ -25416,6 +25480,14 @@
   "t": "phrase"
  },
  {
+  "w": "China's safety is the envy of many countries",
+  "p": "",
+  "s": "",
+  "m": "中国的安全是很多国家美蒸的对象。",
+  "page": 100,
+  "t": "phrase"
+ },
+ {
   "w": "envious",
   "p": "",
   "s": "",
@@ -26046,6 +26118,22 @@
   "m": "生物]进化; 逐步发展/演变 逐步制定出/形成",
   "page": 103,
   "t": "word"
+ },
+ {
+  "w": "Britain's present political system has evolved",
+  "p": "",
+  "s": "",
+  "m": "英国现行政治制度经过几个世纪发展而成。",
+  "page": 103,
+  "t": "phrase"
+ },
+ {
+  "w": "Britain has evolved its",
+  "p": "",
+  "s": "",
+  "m": "经过数百年，英国逐步形成其现有制度。",
+  "page": 103,
+  "t": "phrase"
  },
  {
   "w": "evolution",
@@ -27088,6 +27176,14 @@
   "t": "word"
  },
  {
+  "w": "Children should be exposed to nature much as",
+  "p": "",
+  "s": "",
+  "m": "儿童应尽可能多地接触自然。",
+  "page": 106,
+  "t": "phrase"
+ },
+ {
   "w": "exposure",
   "p": "",
   "s": "",
@@ -28080,10 +28176,26 @@
   "t": "phrase"
  },
  {
+  "w": "Shanghai is famous for its modernization",
+  "p": "",
+  "s": "",
+  "m": "上海以现代化而闻名。",
+  "page": 110,
+  "t": "phrase"
+ },
+ {
   "w": "be famous as",
   "p": "",
   "s": "",
   "m": "作为.而著名",
+  "page": 110,
+  "t": "phrase"
+ },
+ {
+  "w": "Shanghai is famous as a modern city all over",
+  "p": "",
+  "s": "",
+  "m": "上海是一座现代城市，闻名世界。",
   "page": 110,
   "t": "phrase"
  },
@@ -28368,6 +28480,14 @@
   "t": "phrase"
  },
  {
+  "w": "A Farewell to Arms 《",
+  "p": "",
+  "s": "",
+  "m": "永别了,武器》",
+  "page": 111,
+  "t": "phrase"
+ },
+ {
   "w": "farm",
   "p": "",
   "s": "n",
@@ -28444,6 +28564,14 @@
   "p": "",
   "s": "",
   "m": "对..的吸引力",
+  "page": 112,
+  "t": "phrase"
+ },
+ {
+  "w": "Picasso's paintings have a fascination for people",
+  "p": "",
+  "s": "",
+  "m": "毕加索的绘画吸引着全世界的人。",
   "page": 112,
   "t": "phrase"
  },
@@ -34800,6 +34928,22 @@
   "t": "word"
  },
  {
+  "w": "Tho thief had hardly sccn the policeman when",
+  "p": "",
+  "s": "",
+  "m": "小偷一看见警察，就跑了。",
+  "page": 136,
+  "t": "phrase"
+ },
+ {
+  "w": "Hardly had the thief scen the policeman when",
+  "p": "",
+  "s": "",
+  "m": "小偷一看见警察， 就跑了。",
+  "page": 136,
+  "t": "phrase"
+ },
+ {
   "w": "hardware",
   "p": "",
   "s": "",
@@ -38926,6 +39070,14 @@
   "m": "倡议",
   "page": 150,
   "t": "word"
+ },
+ {
+  "w": "China's Belt and Road mitiative",
+  "p": "",
+  "s": "",
+  "m": "中国的\"一带一路\"倡议",
+  "page": 150,
+  "t": "phrase"
  },
  {
   "w": "injure",
@@ -51984,6 +52136,14 @@
   "t": "phrase"
  },
  {
+  "w": "East China Normal University",
+  "p": "",
+  "s": "",
+  "m": "华东师范大学",
+  "page": 193,
+  "t": "phrase"
+ },
+ {
   "w": "north",
   "p": "",
   "s": "",
@@ -53288,6 +53448,14 @@
   "t": "word"
  },
  {
+  "w": "Russia is located on the north of China",
+  "p": "",
+  "s": "",
+  "m": "俄罗斯在中国的北面",
+  "page": 197,
+  "t": "phrase"
+ },
+ {
   "w": "on",
   "p": "",
   "s": "",
@@ -53460,6 +53628,22 @@
   "p": "",
   "s": "",
   "m": "已经离开了。",
+  "page": 198,
+  "t": "phrase"
+ },
+ {
+  "w": "Only if you keep quict can you stay here",
+  "p": "",
+  "s": "",
+  "m": "你只有保持安静才能留在这黑。",
+  "page": 198,
+  "t": "phrase"
+ },
+ {
+  "w": "Only by workinghard can you succecd",
+  "p": "",
+  "s": "",
+  "m": "只有通过务力工作，你才能取得成功。",
   "page": 198,
   "t": "phrase"
  },
@@ -66552,6 +66736,14 @@
   "t": "word"
  },
  {
+  "w": "Yuan Longping is a respected scientist",
+  "p": "",
+  "s": "",
+  "m": "衰隆平是一名受人敬重的科学家。",
+  "page": 243,
+  "t": "phrase"
+ },
+ {
   "w": "in many respects",
   "p": "",
   "s": "",
@@ -69976,6 +70168,14 @@
   "t": "phrase"
  },
  {
+  "w": "Lujiazui has seen the opening-up and",
+  "p": "",
+  "s": "",
+  "m": "陆家嘴见证了浦东的开放和发展。",
+  "page": 255,
+  "t": "phrase"
+ },
+ {
   "w": "development of Pudong",
   "p": "",
   "s": "",
@@ -72396,6 +72596,14 @@
   "p": "",
   "s": "",
   "m": "船沉没了。",
+  "page": 264,
+  "t": "phrase"
+ },
+ {
+  "w": "The ship was sunk in the battle",
+  "p": "",
+  "s": "",
+  "m": "船在战斗中被击沉。",
   "page": 264,
   "t": "phrase"
  },
@@ -76512,6 +76720,14 @@
   "t": "phrase"
  },
  {
+  "w": "Children tend to read such stories as they've",
+  "p": "",
+  "s": "",
+  "m": "孩子们倾向于读他们以前从未听过的故事",
+  "page": 279,
+  "t": "phrase"
+ },
+ {
   "w": "that he has developed a strong ambition",
   "p": "",
   "s": "",
@@ -76632,22 +76848,6 @@
   "t": "phrase"
  },
  {
-  "w": "Studies have suggested that doing g exercise",
-  "p": "",
-  "s": "",
-  "m": "多项研究表明, 经常运动可以减少高血压的",
-  "page": 280,
-  "t": "phrase"
- },
- {
-  "w": "regularly can reduce the risk of suffering from",
-  "p": "",
-  "s": "",
-  "m": "风险。",
-  "page": 280,
-  "t": "phrase"
- },
- {
   "w": "Are you suggesting that you agree with me",
   "p": "",
   "s": "",
@@ -76723,12 +76923,12 @@
   "w": "to sum up",
   "p": "",
   "s": "",
-  "m": "总而言之二in summary",
+  "m": "总而言之",
   "page": 280,
   "t": "phrase"
  },
  {
-  "w": "summary D",
+  "w": "summary",
   "p": "",
   "s": "",
   "m": "摘要,总结,梗概",
@@ -76795,7 +76995,7 @@
   "w": "superior",
   "p": "",
   "s": "adj; n",
-  "m": "质量)较好的;更优秀的;有优 更高的上级，上司 ： / 优越/高人一等",
+  "m": "（质量)较好的;更优秀的;有更高的上级，上司/ 优越/高人一等",
   "page": 281,
   "t": "word"
  },
@@ -76819,7 +77019,7 @@
   "w": "be superior to",
   "p": "",
   "s": "",
-  "m": "在……方面)比………好;②在………方面)比",
+  "m": "(在……方面)比………好;②(在………方面)比",
   "page": 281,
   "t": "phrase"
  },
@@ -76920,14 +77120,6 @@
   "t": "phrase"
  },
  {
-  "w": "water",
-  "p": "",
-  "s": "n",
-  "m": "水/煤气/电力供应 . / 支持者",
-  "page": 281,
-  "t": "word"
- },
- {
   "w": "support your argument",
   "p": "",
   "s": "",
@@ -76992,7 +77184,7 @@
   "t": "word"
  },
  {
-  "w": "supposing(that) coni",
+  "w": "supposing(that)",
   "p": "",
   "s": "",
   "m": "假如,.如果",
@@ -77995,7 +78187,7 @@
   "w": "take up the challenge head-on",
   "p": "",
   "s": "",
-  "m": "真面挑战",
+  "m": "直面挑战",
   "page": 285,
   "t": "phrase"
  },
@@ -78035,7 +78227,7 @@
   "w": "talk",
   "p": "",
   "s": "",
-  "m": "讲话,谈话；.商读：..演讲",
+  "m": "讲话,谈话；商谈；演讲",
   "page": 285,
   "t": "word"
  },
@@ -78112,7 +78304,7 @@
   "t": "phrase"
  },
  {
-  "w": "tap. sb on the shoulder",
+  "w": "tap sb on the shoulder",
   "p": "",
   "s": "",
   "m": "轻轻拍打某人的肩膀",
@@ -78195,7 +78387,7 @@
   "w": "the target of",
   "p": "",
   "s": "",
-  "m": "某行为)的目标/对象",
+  "m": "（某行为)的目标/对象",
   "page": 286,
   "t": "phrase"
  },
@@ -81950,6 +82142,14 @@
   "m": "作为…………的原因,构成…………的基础",
   "page": 301,
   "t": "word"
+ },
+ {
+  "w": "Chinese philosophy underlies his works",
+  "p": "",
+  "s": "",
+  "m": "他的作品都以中国哲学为基础",
+  "page": 301,
+  "t": "phrase"
  },
  {
   "w": "understand",
