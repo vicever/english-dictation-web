@@ -770,9 +770,9 @@ kbd {
           <div class="setting-item">
             <label>默写范围 <span class="hint">（按页码区间）</span></label>
             <div style="display:flex; gap:8px; align-items:center;">
-              <input type="number" id="rangeStart" min="1" max="326" value="1" style="width:80px" onchange="updateWordCount()">
+              <input type="number" id="rangeStart" min="1" max="322" value="1" style="width:80px" onchange="updateWordCount()">
               <span>—</span>
-              <input type="number" id="rangeEnd" min="1" max="326" value="326" style="width:80px" onchange="updateWordCount()">
+              <input type="number" id="rangeEnd" min="1" max="322" value="322" style="width:80px" onchange="updateWordCount()">
               <span style="font-size:12px;color:#999">页</span>
             </div>
           </div>
@@ -1033,7 +1033,7 @@ kbd {
         <h3 style="font-size:16px; margin-bottom:12px;">关于</h3>
         <div style="font-size:14px; color:var(--text-light); line-height:1.8;">
           <p><strong>英语单词默写系统</strong> v1.0</p>
-          <p>词库来源：东昌中学英语词汇手册（第 1–326 页）</p>
+          <p>词库来源：东昌中学英语词汇手册（第 1–323 页）</p>
           <p>功能：随机默写、错题管理、间隔复习、统计分析</p>
           <p>词库数据：从外部 vocab_data.json 文件加载（与 HTML 同目录部署即可）</p>
           <p>用户数据：错题、进度等保存在浏览器本地（localStorage），无需联网</p>
@@ -1221,7 +1221,7 @@ function selectMode(mode, el) {
 // ===== Word Count Display =====
 function updateWordCount() {
   const start = parseInt(document.getElementById('rangeStart').value) || 1;
-  const end = parseInt(document.getElementById('rangeEnd').value) || 326;
+  const end = parseInt(document.getElementById('rangeEnd').value) || 322;
   
   // 按词库中的 page 字段精确筛选
   if (!Array.isArray(vocabData)) return; // 词库未加载完成时安全退出
@@ -1322,7 +1322,7 @@ function startDictation() {
   
   // Get all available words — 按页码范围筛选
   const pageStart = parseInt(document.getElementById('rangeStart').value) || 1;
-  const pageEnd = parseInt(document.getElementById('rangeEnd').value) || 326;
+  const pageEnd = parseInt(document.getElementById('rangeEnd').value) || 322;
   let pool = vocabData.filter(v => v.page >= pageStart && v.page <= pageEnd);
   
   if (dictationMode === 'review') {
