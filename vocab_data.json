@@ -488,14 +488,6 @@
   "t": "phrase"
  },
  {
-  "w": "Only the manager can have access to this paper",
-  "p": "",
-  "s": "",
-  "m": "只有经理才能接触到这份文件。",
-  "page": 2,
-  "t": "phrase"
- },
- {
   "w": "accident",
   "p": "",
   "s": "n",
@@ -5400,14 +5392,6 @@
   "t": "phrase"
  },
  {
-  "w": "The larger the audience is",
-  "p": "",
-  "s": "",
-  "m": "观众越多，演讲者越兴奋。",
-  "page": 23,
-  "t": "phrase"
- },
- {
   "w": "the more excited the speaker will be",
   "p": "",
   "s": "",
@@ -6320,14 +6304,6 @@
   "t": "word"
  },
  {
-  "w": "Barely had he come back when he went to sleep",
-  "p": "",
-  "s": "",
-  "m": "他一回来就去睡觉了。",
-  "page": 26,
-  "t": "phrase"
- },
- {
   "w": "bark",
   "p": "",
   "s": "n; vi",
@@ -7164,14 +7140,6 @@
   "p": "",
   "s": "",
   "m": "放松裤带",
-  "page": 29,
-  "t": "phrase"
- },
- {
-  "w": "China's Belt and Road Initiative",
-  "p": "",
-  "s": "",
-  "m": "中国的“一带一路”倡议",
   "page": 29,
   "t": "phrase"
  },
@@ -13408,14 +13376,6 @@
   "t": "phrase"
  },
  {
-  "w": "The People's Republic of China came into being in 1949",
-  "p": "",
-  "s": "",
-  "m": "中华人民共和国成立于 1949 年。",
-  "page": 56,
-  "t": "phrase"
- },
- {
   "w": "come into effect",
   "p": "",
   "s": "",
@@ -16096,14 +16056,6 @@
   "t": "phrase"
  },
  {
-  "w": "Qi Baishi achieved success by coupling talent",
-  "p": "",
-  "s": "",
-  "m": "天赋加上勤奋使齐白石取得成功。",
-  "page": 67,
-  "t": "phrase"
- },
- {
   "w": "courage",
   "p": "",
   "s": "",
@@ -17972,22 +17924,6 @@
   "p": "",
   "s": "",
   "m": "在某人所处的时代",
-  "page": 73,
-  "t": "phrase"
- },
- {
-  "w": "Mark Twain was seen as one of",
-  "p": "",
-  "s": "",
-  "m": "在他自己的时代，马克·吐温被视作美国最",
-  "page": 73,
-  "t": "phrase"
- },
- {
-  "w": "America's most famous writers",
-  "p": "",
-  "s": "",
-  "m": "著名的作家之一。",
   "page": 73,
   "t": "phrase"
  },
@@ -22768,23 +22704,7 @@
   "t": "word"
  },
  {
-  "w": "Korea and Japan drew",
-  "p": "",
-  "s": "",
-  "m": "韩国队与日本队战平。",
-  "page": 90,
-  "t": "phrase"
- },
- {
   "w": "Korea drew with/ against Japan",
-  "p": "",
-  "s": "",
-  "m": "韩国队与日本队战平。",
-  "page": 90,
-  "t": "phrase"
- },
- {
-  "w": "Korea drew the match against Japan",
   "p": "",
   "s": "",
   "m": "韩国队与日本队战平。",
@@ -25496,14 +25416,6 @@
   "t": "phrase"
  },
  {
-  "w": "China's safety is the envy of many countries",
-  "p": "",
-  "s": "",
-  "m": "中国的安全是很多国家美蒸的对象。",
-  "page": 100,
-  "t": "phrase"
- },
- {
   "w": "envious",
   "p": "",
   "s": "",
@@ -26134,22 +26046,6 @@
   "m": "生物]进化; 逐步发展/演变 逐步制定出/形成",
   "page": 103,
   "t": "word"
- },
- {
-  "w": "Britain's present political system has evolved",
-  "p": "",
-  "s": "",
-  "m": "英国现行政治制度经过几个世纪发展而成。",
-  "page": 103,
-  "t": "phrase"
- },
- {
-  "w": "Britain has evolved its",
-  "p": "",
-  "s": "",
-  "m": "经过数百年，英国逐步形成其现有制度。",
-  "page": 103,
-  "t": "phrase"
  },
  {
   "w": "evolution",
@@ -27192,14 +27088,6 @@
   "t": "word"
  },
  {
-  "w": "Children should be exposed to nature much as",
-  "p": "",
-  "s": "",
-  "m": "儿童应尽可能多地接触自然。",
-  "page": 106,
-  "t": "phrase"
- },
- {
   "w": "exposure",
   "p": "",
   "s": "",
@@ -28192,26 +28080,10 @@
   "t": "phrase"
  },
  {
-  "w": "Shanghai is famous for its modernization",
-  "p": "",
-  "s": "",
-  "m": "上海以现代化而闻名。",
-  "page": 110,
-  "t": "phrase"
- },
- {
   "w": "be famous as",
   "p": "",
   "s": "",
   "m": "作为.而著名",
-  "page": 110,
-  "t": "phrase"
- },
- {
-  "w": "Shanghai is famous as a modern city all over",
-  "p": "",
-  "s": "",
-  "m": "上海是一座现代城市，闻名世界。",
   "page": 110,
   "t": "phrase"
  },
@@ -28496,14 +28368,6 @@
   "t": "phrase"
  },
  {
-  "w": "A Farewell to Arms 《",
-  "p": "",
-  "s": "",
-  "m": "永别了,武器》",
-  "page": 111,
-  "t": "phrase"
- },
- {
   "w": "farm",
   "p": "",
   "s": "n",
@@ -28580,14 +28444,6 @@
   "p": "",
   "s": "",
   "m": "对..的吸引力",
-  "page": 112,
-  "t": "phrase"
- },
- {
-  "w": "Picasso's paintings have a fascination for people",
-  "p": "",
-  "s": "",
-  "m": "毕加索的绘画吸引着全世界的人。",
   "page": 112,
   "t": "phrase"
  },
@@ -34944,22 +34800,6 @@
   "t": "word"
  },
  {
-  "w": "Tho thief had hardly sccn the policeman when",
-  "p": "",
-  "s": "",
-  "m": "小偷一看见警察，就跑了。",
-  "page": 136,
-  "t": "phrase"
- },
- {
-  "w": "Hardly had the thief scen the policeman when",
-  "p": "",
-  "s": "",
-  "m": "小偷一看见警察， 就跑了。",
-  "page": 136,
-  "t": "phrase"
- },
- {
   "w": "hardware",
   "p": "",
   "s": "",
@@ -39088,14 +38928,6 @@
   "t": "word"
  },
  {
-  "w": "China's Belt and Road mitiative",
-  "p": "",
-  "s": "",
-  "m": "中国的\"一带一路\"倡议",
-  "page": 150,
-  "t": "phrase"
- },
- {
   "w": "injure",
   "p": "",
   "s": "",
@@ -39932,14 +39764,6 @@
   "p": "",
   "s": "",
   "m": "将融入",
-  "page": 152,
-  "t": "phrase"
- },
- {
-  "w": "Chinese culture into cultural exchanges",
-  "p": "",
-  "s": "",
-  "m": "流中去",
   "page": 152,
   "t": "phrase"
  },
@@ -41724,14 +41548,6 @@
   "p": "",
   "s": "",
   "m": "保持被",
-  "page": 158,
-  "t": "phrase"
- },
- {
-  "w": "Only he who keeps his eye fixed on the far",
-  "p": "",
-  "s": "",
-  "m": "只有注视远方地平线的人， 才能找到正确的",
   "page": 158,
   "t": "phrase"
  },
@@ -50016,14 +49832,6 @@
   "t": "phrase"
  },
  {
-  "w": "The calmer you are,the fewer mistakes you will",
-  "p": "",
-  "s": "",
-  "m": "你越冷静，越不容易出错。",
-  "page": 186,
-  "t": "phrase"
- },
- {
   "w": "make money",
   "p": "",
   "s": "",
@@ -50654,14 +50462,6 @@
   "m": "夫人(用于已婚女子的夫姓或名前)",
   "page": 188,
   "t": "word"
- },
- {
-  "w": "Mr. and Mrs. Smith",
-  "p": "",
-  "s": "",
-  "m": "史密斯夫妇",
-  "page": 188,
-  "t": "phrase"
  },
  {
   "w": "Ms",
@@ -51664,14 +51464,6 @@
   "t": "phrase"
  },
  {
-  "w": "Neither he nor I havebeen to Africa",
-  "p": "",
-  "s": "",
-  "m": "我和他都没去过非洲。",
-  "page": 191,
-  "t": "phrase"
- },
- {
   "w": "nephew",
   "p": "",
   "s": "",
@@ -52188,14 +51980,6 @@
   "p": "",
   "s": "",
   "m": "标准,规范;②(社会)准则",
-  "page": 193,
-  "t": "phrase"
- },
- {
-  "w": "East China Normal University",
-  "p": "",
-  "s": "",
-  "m": "华东师范大学",
   "page": 193,
   "t": "phrase"
  },
@@ -53504,14 +53288,6 @@
   "t": "word"
  },
  {
-  "w": "Russia is located onthenorthof China",
-  "p": "",
-  "s": "",
-  "m": "俄罗斯在中国的北面",
-  "page": 197,
-  "t": "phrase"
- },
- {
   "w": "on",
   "p": "",
   "s": "",
@@ -53684,22 +53460,6 @@
   "p": "",
   "s": "",
   "m": "已经离开了。",
-  "page": 198,
-  "t": "phrase"
- },
- {
-  "w": "Only if you keep quict can you stay here",
-  "p": "",
-  "s": "",
-  "m": "你只有保持安静才能留在这黑。",
-  "page": 198,
-  "t": "phrase"
- },
- {
-  "w": "Only by workinghard can you succecd",
-  "p": "",
-  "s": "",
-  "m": "只有通过务力工作，你才能取得成功。",
   "page": 198,
   "t": "phrase"
  },
@@ -66792,14 +66552,6 @@
   "t": "word"
  },
  {
-  "w": "Yuan Longping is a respected scientist",
-  "p": "",
-  "s": "",
-  "m": "衰隆平是一名受人敬重的科学家。",
-  "page": 243,
-  "t": "phrase"
- },
- {
   "w": "in many respects",
   "p": "",
   "s": "",
@@ -70224,14 +69976,6 @@
   "t": "phrase"
  },
  {
-  "w": "Lujiazui hasseen theopening-up and",
-  "p": "",
-  "s": "",
-  "m": "陆家嘴见证了浦东的开放和发展。",
-  "page": 255,
-  "t": "phrase"
- },
- {
   "w": "development of Pudong",
   "p": "",
   "s": "",
@@ -72652,14 +72396,6 @@
   "p": "",
   "s": "",
   "m": "船沉没了。",
-  "page": 264,
-  "t": "phrase"
- },
- {
-  "w": "The ship was sunk in the battle",
-  "p": "",
-  "s": "",
-  "m": "船在战斗中被击沉。",
   "page": 264,
   "t": "phrase"
  },
@@ -76772,14 +76508,6 @@
   "p": "",
   "s": "",
   "m": "波炉和洗衣机。",
-  "page": 279,
-  "t": "phrase"
- },
- {
-  "w": "Children tend to read such stories as they've",
-  "p": "",
-  "s": "",
-  "m": "孩子们倾向于读他们以前从未听过的故事",
   "page": 279,
   "t": "phrase"
  },
@@ -82222,14 +81950,6 @@
   "m": "作为…………的原因,构成…………的基础",
   "page": 301,
   "t": "word"
- },
- {
-  "w": "Chinese philosophy underlies his works",
-  "p": "",
-  "s": "",
-  "m": "他的作品都以中国哲学为基础",
-  "page": 301,
-  "t": "phrase"
  },
  {
   "w": "understand",
