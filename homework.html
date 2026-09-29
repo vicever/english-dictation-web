@@ -404,6 +404,19 @@ function hwInitSupabase(){
 
 function hwGetUser(){return localStorage.getItem('app_username')||'';}
 
+// 用户切换检测：app_username 变化时清空本地数据，防止不同成员的数据串号
+function hwCheckUserSwitch(){
+  const cur=hwGetUser();
+  const last=localStorage.getItem('hw_last_user');
+  if(last&&last!==cur){
+    localStorage.removeItem(STORAGE_KEY);
+    appData=JSON.parse(JSON.stringify(DEFAULT_DATA));
+    hwLastSyncTime=0;
+    renderAll();
+  }
+  localStorage.setItem('hw_last_user',cur);
+}
+
 function scheduleHwSync(){
   if(hwIsSyncing)return;
   if(hwDebounceTimer)clearTimeout(hwDebounceTimer);
@@ -461,6 +474,7 @@ function hwInitSync(){
   if(hwGetUser()){
     hwInitSupabase();
     if(hwSupabaseClient){
+      hwCheckUserSwitch();
       hwSyncFromCloud();
       hwStartPolling();
     }
@@ -476,7 +490,7 @@ hwInitSync();
 window.addEventListener('storage',function(e){
   if(e.key==='app_username'&&e.newValue){
     if(!hwSupabaseClient){hwInitSupabase();}
-    if(hwSupabaseClient){hwSyncFromCloud();hwStartPolling();}
+    if(hwSupabaseClient){hwCheckUserSwitch();hwSyncFromCloud();hwStartPolling();}
   }
 });
 

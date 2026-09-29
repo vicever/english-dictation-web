@@ -716,6 +716,110 @@ kbd {
   font-weight: 700;
   color: var(--primary);
 }
+
+/* ===== 每日任务 / 用户选择 / 家长管理 ===== */
+.picker-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(15, 23, 42, .92);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.picker-box {
+  background: var(--bg, #fff); border-radius: 20px;
+  width: 100%; max-width: 520px; padding: 28px 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  max-height: 86vh; overflow-y: auto;
+}
+.picker-box h2 { font-size: 20px; text-align: center; margin-bottom: 4px; }
+.picker-box .picker-sub { font-size: 13px; color: #94a3b8; text-align: center; margin-bottom: 20px; }
+.picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.picker-card {
+  border: 2px solid #e2e8f0; border-radius: 14px; background: #fff;
+  padding: 16px 8px; text-align: center; cursor: pointer;
+  transition: all .15s;
+}
+.picker-card:hover { border-color: var(--primary, #0077BE); transform: translateY(-2px); }
+.picker-card .avatar {
+  width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 22px; font-weight: 700;
+}
+.picker-card .nm { font-size: 15px; font-weight: 700; word-break: break-all; }
+.picker-card .rl { font-size: 11px; margin-top: 4px; padding: 2px 10px; border-radius: 10px; display: inline-block; }
+.picker-card .rl.admin { background: #fef3c7; color: #92400e; }
+.picker-card .rl.child { background: #dbeafe; color: #1e40af; }
+.picker-add {
+  border: 2px dashed #cbd5e1; border-radius: 14px; background: #f8fafc;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100px; cursor: pointer; color: #64748b; font-size: 14px; font-weight: 600;
+}
+.picker-add:hover { border-color: var(--primary, #0077BE); color: var(--primary, #0077BE); }
+.picker-form input, .task-form input, .task-form select {
+  width: 100%; padding: 10px 12px; border: 1.5px solid #e2e8f0;
+  border-radius: 10px; font-size: 15px; margin-bottom: 10px; box-sizing: border-box;
+}
+.task-form label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin: 10px 0 4px; }
+.weekday-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.weekday-chip {
+  width: 36px; height: 32px; border-radius: 9px; border: 1.5px solid #e2e8f0;
+  background: #fff; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer;
+}
+.weekday-chip.on { background: var(--primary, #0077BE); border-color: var(--primary, #0077BE); color: #fff; }
+
+.daily-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.daily-head .greet { font-size: 17px; font-weight: 800; }
+.daily-head .greet .hi { color: var(--primary, #0077BE); }
+.daily-head .date { font-size: 13px; color: #94a3b8; }
+.celebrate {
+  background: linear-gradient(135deg, #fef9c3, #fde68a); color: #854d0e;
+  border-radius: 14px; padding: 16px; text-align: center;
+  font-size: 15px; font-weight: 800; margin-bottom: 14px;
+}
+.task-card {
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px;
+  padding: 16px; margin-bottom: 12px; display: flex; gap: 14px; align-items: center;
+  cursor: pointer; transition: all .15s; position: relative;
+}
+.task-card:hover { border-color: var(--primary, #0077BE); box-shadow: 0 6px 18px rgba(0,119,190,.08); }
+.task-card.done { border-color: #86efac; background: #f0fdf4; }
+.task-card .tk-ico {
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 24px; background: #f1f5f9;
+}
+.task-card.done .tk-ico { background: #dcfce7; }
+.task-card .tk-body { flex: 1; min-width: 0; }
+.task-card .tk-title { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.task-card .tk-sub { font-size: 12.5px; color: #64748b; margin-top: 3px; }
+.task-card .tk-check {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  border: 2.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 15px;
+}
+.task-card.done .tk-check { background: #22c55e; border-color: #22c55e; }
+.tk-bar { height: 9px; border-radius: 6px; background: #e2e8f0; margin-top: 9px; overflow: hidden; }
+.tk-bar .fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--primary, #0077BE), #38bdf8); transition: width .4s; }
+.task-card.done .tk-bar .fill { background: #22c55e; }
+.daily-empty { text-align: center; color: #94a3b8; padding: 40px 0; font-size: 14px; }
+
+.mgr-child-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.mgr-child {
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 16px;
+  cursor: pointer; transition: all .15s; text-align: center;
+}
+.mgr-child:hover { border-color: var(--primary, #0077BE); }
+.mgr-child .avatar { width: 46px; height: 46px; border-radius: 50%; margin: 0 auto 8px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; }
+.mgr-child .nm { font-weight: 800; font-size: 15px; }
+.mgr-child .st { font-size: 12px; color: #64748b; margin-top: 4px; }
+.mgr-back { margin-bottom: 14px; }
+.tpl-item {
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px;
+  padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.tpl-item .t { flex: 1; min-width: 140px; }
+.tpl-item .t .tt { font-weight: 700; font-size: 14px; }
+.tpl-item .t .ts { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.tpl-item .ops { display: flex; gap: 6px; }
+.tpl-item .ops button { padding: 5px 10px; font-size: 12px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -738,7 +842,8 @@ kbd {
 <div class="container">
   <!-- Tabs -->
   <div class="tabs">
-    <button class="tab active" data-tab="dictation" onclick="switchTab('dictation')">默写练习</button>
+    <button class="tab active" data-tab="daily" onclick="switchTab('daily')" id="tab-btn-daily">今日任务</button>
+    <button class="tab" data-tab="dictation" onclick="switchTab('dictation')">默写练习</button>
     <button class="tab" data-tab="errorbook" onclick="switchTab('errorbook')">错题册</button>
     <button class="tab" data-tab="history" onclick="switchTab('history')">默写记录</button>
     <button class="tab" data-tab="wordlist" onclick="switchTab('wordlist')">词库浏览</button>
@@ -746,8 +851,13 @@ kbd {
     <button class="tab" data-tab="settings" onclick="switchTab('settings')">设置</button>
   </div>
 
+  <!-- Daily Tasks Tab -->
+  <div class="tab-content active" id="tab-daily">
+    <div id="daily-container"><p class="daily-empty">加载中…</p></div>
+  </div>
+
   <!-- Dictation Tab -->
-  <div class="tab-content active" id="tab-dictation">
+  <div class="tab-content" id="tab-dictation">
     <!-- Setup panel -->
     <div id="dictation-setup">
       <div class="card">
@@ -1204,6 +1314,7 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
   document.getElementById(`tab-${tab}`).classList.add('active');
+  if (tab === 'daily') renderDaily();
 }
 
 // ===== Mode Selection =====
@@ -2139,69 +2250,510 @@ function getCurrentUser() {
   return currentUser;
 }
 
+// ===== 用户 / 角色 / 每日任务系统 =====
+const AVATAR_COLORS = ['#0077BE', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#06b6d4', '#ef4444', '#6366f1'];
+const TASK_TYPE_META = {
+  dictation: { icon: '📖', name: '背单词',  hint: '自动统计当日默写数量' },
+  homework:  { icon: '📝', name: '作业清单', hint: '完成作业乐园中所有作业' },
+  goal:      { icon: '🎯', name: '目标打卡', hint: '完成作业乐园中所有目标' },
+  custom:    { icon: '✅', name: '自定义',   hint: '完成后手动打勾' }
+};
+let pickerUsers = [];      // 选择器缓存
+let dailyTplCache = null;  // 任务模板缓存
+
+function escH(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+}
+function localDateStr(d) {
+  const x = d || new Date(); const p = n => String(n).padStart(2, '0');
+  return x.getFullYear() + '-' + p(x.getMonth() + 1) + '-' + p(x.getDate());
+}
+function todayWeekday() { const w = new Date().getDay(); return w === 0 ? 7 : w; }
+function getRole() { return localStorage.getItem('app_role') || 'child'; }
+function getDisplayName() { return localStorage.getItem('app_display_name') || getCurrentUser(); }
+function avatarOf(name, i) {
+  return '<div class="avatar" style="background:' + AVATAR_COLORS[i % AVATAR_COLORS.length] + '">' +
+    escH(String(name).charAt(0)) + '</div>';
+}
+
+async function fetchAllUsers() {
+  if (!supabaseClient) return [];
+  try {
+    const { data, error } = await supabaseClient.from('users').select('*').order('created_at', { ascending: true });
+    if (error) {
+      if (error.code === '42P01' || /relation .* does not exist/i.test(error.message || '')) return null;
+      throw error;
+    }
+    return data || [];
+  } catch (e) {
+    console.warn('fetch users failed:', e);
+    return null;
+  }
+}
+
 function ensureUserOnLoad() {
-  const user = getCurrentUser();
-  if (!user) {
-    showUsernamePrompt();
-  } else {
-    updateUserDisplay();
-    initSupabase();
-    if (supabaseClient) {
-      syncFromCloud();
-      startPolling();
-    }
-  }
-}
-
-function showUsernamePrompt() {
-  const overlay = document.createElement('div');
-  overlay.className = 'user-modal-overlay';
-  overlay.innerHTML = '<div class="user-modal">' +
-    '<h2>欢迎使用</h2>' +
-    '<p>请输入用户名，用于多端数据同步<br>（同一用户名在不同设备上数据互通）</p>' +
-    '<input id="usernameInput" placeholder="输入用户名" maxlength="20" autocomplete="off">' +
-    '<button class="btn btn-primary btn-lg" onclick="confirmUsername()" style="width:100%;">确定</button>' +
-    '</div>';
-  document.body.appendChild(overlay);
-  const input = overlay.querySelector('#usernameInput');
-  input.focus();
-  input.addEventListener('keydown', function(e) { if (e.key === 'Enter') confirmUsername(); });
-}
-
-function confirmUsername() {
-  const name = document.getElementById('usernameInput').value.trim();
-  if (!name) { alert('请输入用户名'); return; }
-  currentUser = name;
-  localStorage.setItem('app_username', name);
-  document.querySelector('.user-modal-overlay').remove();
-  updateUserDisplay();
   initSupabase();
-  if (supabaseClient) {
-    syncFromCloud();
-    startPolling();
-  }
-  showToast('欢迎，' + name + '！', 'success');
+  const saved = localStorage.getItem('app_username') || '';
+  if (!saved) { showUserPicker(); return; }
+  validateAndEnter(saved);
 }
 
-function switchUser() {
-  const name = prompt('输入新的用户名：', getCurrentUser());
-  if (name && name.trim()) {
-    currentUser = name.trim();
-    localStorage.setItem('app_username', currentUser);
+async function validateAndEnter(userId) {
+  const users = await fetchAllUsers();
+  if (users === null) {
+    // users 表不存在（未执行建表SQL）→ 降级为旧逻辑直接进入
+    currentUser = userId;
     updateUserDisplay();
-    if (supabaseClient) {
-      syncFromCloud();
-    } else {
-      initSupabase();
-      if (supabaseClient) { syncFromCloud(); startPolling(); }
-    }
-    showToast('已切换到用户：' + currentUser, 'success');
+    if (supabaseClient) { syncFromCloud(); startPolling(); }
+    switchTab('daily');
+    renderDaily();
+    return;
+  }
+  const u = users.find(x => x.user_id === userId);
+  if (u) { enterUser(u); return; }
+  if (users.length === 0) { showUserPicker(); return; }
+  // 旧用户不在 users 表 → 自动注册为学生，延续原有默写数据
+  const nu = { user_id: userId, display_name: userId, role: 'child' };
+  try { if (supabaseClient) await supabaseClient.from('users').upsert(nu); } catch (e) { console.warn(e); }
+  enterUser(nu);
+}
+
+function enterUser(u) {
+  const prevUser = localStorage.getItem('app_username');
+  currentUser = u.user_id;
+  localStorage.setItem('app_username', u.user_id);
+  localStorage.setItem('app_display_name', u.display_name || u.user_id);
+  localStorage.setItem('app_role', u.role || 'child');
+  if (prevUser && prevUser !== u.user_id) {
+    // 切换用户：清空本地默写数据并重置同步时间，防止上一用户的数据串入新用户
+    Object.values(STORAGE_KEYS).forEach(function(k) { localStorage.removeItem(k); });
+    lastCloudSyncTime = 0;
+    init();
+  }
+  updateUserDisplay();
+  if (supabaseClient) { syncFromCloud(); startPolling(); }
+  showToast('欢迎，' + (u.display_name || u.user_id) + '！', 'success');
+  switchTab('daily');
+  renderDaily();
+}
+
+function showUserPicker() {
+  document.querySelectorAll('.picker-overlay').forEach(o => o.remove());
+  const ov = document.createElement('div');
+  ov.className = 'picker-overlay';
+  ov.innerHTML = '<div class="picker-box" id="pickerBox">加载成员中…</div>';
+  document.body.appendChild(ov);
+  loadPickerList();
+}
+
+async function loadPickerList() {
+  const box = document.getElementById('pickerBox');
+  if (!box) return;
+  const users = await fetchAllUsers();
+  if (users === null) {
+    box.innerHTML = '<h2>暂时无法加载成员</h2><p class="picker-sub">请检查网络；若首次使用，请先在 Supabase 中执行建表 SQL</p>';
+    return;
+  }
+  pickerUsers = users;
+  if (users.length === 0) {
+    box.innerHTML = '<h2>欢迎使用 👋</h2><p class="picker-sub">首次使用，请先创建家长（管理员）账户</p>' +
+      '<div class="picker-form"><input id="initAdminName" placeholder="家长称呼，如：爸爸" maxlength="10">' +
+      '<button class="btn btn-primary btn-lg" style="width:100%" onclick="createFirstAdmin()">创建并进入</button></div>';
+    setTimeout(() => { const i = document.getElementById('initAdminName'); if (i) i.focus(); }, 60);
+    return;
+  }
+  let html = '<h2>选择用户</h2><p class="picker-sub">点击头像进入</p><div class="picker-grid">';
+  users.forEach((u, i) => {
+    const roleTag = u.role === 'admin' ? '<span class="rl admin">家长</span>' : '<span class="rl child">学生</span>';
+    html += '<div class="picker-card" onclick="pickUser(' + i + ')">' +
+      avatarOf(u.display_name, i) +
+      '<div class="nm">' + escH(u.display_name) + '</div>' + roleTag + '</div>';
+  });
+  html += '</div><div class="picker-grid" style="grid-template-columns:1fr">' +
+    '<div class="picker-add" onclick="showAddMemberForm()">＋ 添加成员</div></div>';
+  box.innerHTML = html;
+}
+
+function pickUser(i) {
+  const u = pickerUsers[i];
+  if (!u) return;
+  document.querySelector('.picker-overlay').remove();
+  enterUser(u);
+}
+
+async function createFirstAdmin() {
+  const name = document.getElementById('initAdminName').value.trim();
+  if (!name) { showToast('请输入称呼', 'error'); return; }
+  const nu = { user_id: 'admin_' + Date.now().toString(36), display_name: name, role: 'admin' };
+  try {
+    if (supabaseClient) await supabaseClient.from('users').upsert(nu);
+  } catch (e) { console.warn(e); }
+  document.querySelector('.picker-overlay').remove();
+  enterUser(nu);
+}
+
+function showAddMemberForm() {
+  const box = document.getElementById('pickerBox');
+  if (!box) return;
+  box.innerHTML = '<h2>添加成员</h2><p class="picker-sub">新成员的默写与作业数据将独立保存</p>' +
+    '<div class="picker-form">' +
+    '<input id="newMemberName" placeholder="称呼，如：小明" maxlength="10">' +
+    '<label style="font-size:13px;font-weight:600;color:#475569;">角色</label>' +
+    '<select id="newMemberRole" style="width:100%;padding:10px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;">' +
+    '<option value="child">学生（孩子）</option><option value="admin">家长（管理员）</option></select>' +
+    '<div style="display:flex;gap:10px;margin-top:14px;">' +
+    '<button class="btn btn-outline" style="flex:1" onclick="loadPickerList()">返回</button>' +
+    '<button class="btn btn-primary" style="flex:1" onclick="createMember()">创建</button></div></div>';
+  setTimeout(() => { const i = document.getElementById('newMemberName'); if (i) i.focus(); }, 60);
+}
+
+async function createMember() {
+  const name = document.getElementById('newMemberName').value.trim();
+  const role = document.getElementById('newMemberRole').value;
+  if (!name) { showToast('请输入称呼', 'error'); return; }
+  const nu = { user_id: (role === 'admin' ? 'admin_' : 'user_') + Date.now().toString(36), display_name: name, role: role };
+  try {
+    if (supabaseClient) await supabaseClient.from('users').upsert(nu);
+    pickerUsers.push(nu);
+    showToast('已添加成员：' + name, 'success');
+    loadPickerList();
+  } catch (e) {
+    showToast('创建失败：' + (e.message || '未知错误'), 'error');
   }
 }
+
+function switchUser() { showUserPicker(); }
+
+// ===== 每日任务：数据 =====
+async function fetchTemplates(childId) {
+  if (!supabaseClient) return [];
+  try {
+    const { data, error } = await supabaseClient.from('task_templates')
+      .select('*').eq('child_id', childId).order('sort_order', { ascending: true });
+    if (error) throw error;
+    return data || [];
+  } catch (e) { console.warn('fetch templates failed:', e); return []; }
+}
+
+async function fetchCheckins(childId, dateStr) {
+  if (!supabaseClient) return {};
+  try {
+    const { data, error } = await supabaseClient.from('task_checkins')
+      .select('*').eq('child_id', childId).eq('task_date', dateStr);
+    if (error) throw error;
+    const map = {};
+    (data || []).forEach(c => { map[c.template_id] = c.done; });
+    return map;
+  } catch (e) { console.warn('fetch checkins failed:', e); return {}; }
+}
+
+async function fetchHomeworkOf(childId) {
+  if (!supabaseClient) return null;
+  try {
+    const { data, error } = await supabaseClient.from('app_data')
+      .select('homework').eq('user_id', childId).single();
+    if (error && error.code !== 'PGRST116') throw error;
+    return (data && data.homework) || {};
+  } catch (e) { console.warn('fetch homework failed:', e); return null; }
+}
+
+function countTodayDictated() {
+  const today = localDateStr();
+  let n = 0;
+  getHistory().forEach(h => {
+    if (h.date && localDateStr(new Date(h.date)) === today) n += (h.total || 0);
+  });
+  return n;
+}
+
+// 计算单条任务今日进度：返回 {done, cur, target, label}
+function taskProgress(tpl, ctx) {
+  const meta = TASK_TYPE_META[tpl.task_type] || TASK_TYPE_META.custom;
+  if (tpl.task_type === 'dictation') {
+    const cur = ctx.dictatedToday; const target = tpl.target_count || 20;
+    return { done: cur >= target, cur: cur, target: target, label: cur + ' / ' + target + ' 词' };
+  }
+  if (tpl.task_type === 'homework') {
+    const list = (ctx.homework && ctx.homework.homeworkList) || [];
+    const undone = list.filter(h => !h.isFinished).length;
+    return { done: undone === 0, cur: list.length - undone, target: list.length, label: undone === 0 ? '全部完成' : '还剩 ' + undone + ' 项' };
+  }
+  if (tpl.task_type === 'goal') {
+    const list = (ctx.homework && ctx.homework.goalList) || [];
+    const undone = list.filter(g => !g.done).length;
+    return { done: undone === 0, cur: list.length - undone, target: list.length, label: undone === 0 ? '全部完成' : '还剩 ' + undone + ' 个' };
+  }
+  const done = !!ctx.checkins[tpl.id];
+  return { done: done, cur: done ? 1 : 0, target: 1, label: done ? '今日已完成' : '待完成' };
+}
+
+async function buildTaskCtx(childId, isSelf) {
+  const checkins = await fetchCheckins(childId, localDateStr());
+  const homework = await fetchHomeworkOf(childId);
+  return {
+    checkins: checkins,
+    homework: homework,
+    dictatedToday: isSelf ? countTodayDictated() : await fetchDictatedTodayOf(childId)
+  };
+}
+
+async function fetchDictatedTodayOf(childId) {
+  if (!supabaseClient) return 0;
+  try {
+    const { data, error } = await supabaseClient.from('app_data')
+      .select('dictation').eq('user_id', childId).single();
+    if (error && error.code !== 'PGRST116') throw error;
+    const hist = (data && data.dictation && data.dictation.history) || [];
+    const today = localDateStr();
+    let n = 0;
+    hist.forEach(h => { if (h.date && localDateStr(new Date(h.date)) === today) n += (h.total || 0); });
+    return n;
+  } catch (e) { return 0; }
+}
+
+function todayTemplates(all) {
+  const w = todayWeekday();
+  return (all || []).filter(t => t.active !== false && (t.weekdays || [1,2,3,4,5,6,7]).includes(w));
+}
+
+// ===== 每日任务：渲染入口 =====
+async function renderDaily() {
+  const box = document.getElementById('daily-container');
+  if (!box) return;
+  if (!getCurrentUser()) {
+    box.innerHTML = '<p class="daily-empty">请先选择用户</p>';
+    return;
+  }
+  box.innerHTML = '<p class="daily-empty">加载中…</p>';
+  if (getRole() === 'admin') {
+    renderAdminDaily(box);
+  } else {
+    renderChildDaily(box, getCurrentUser(), getDisplayName(), true);
+  }
+}
+
+function greetWord() {
+  const h = new Date().getHours();
+  if (h < 6) return '夜深了';
+  if (h < 9) return '早上好';
+  if (h < 12) return '上午好';
+  if (h < 14) return '中午好';
+  if (h < 18) return '下午好';
+  return '晚上好';
+}
+
+async function renderChildDaily(box, childId, childName, isSelf) {
+  const all = await fetchTemplates(childId);
+  const tpls = todayTemplates(all);
+  const ctx = await buildTaskCtx(childId, isSelf);
+  const progressList = tpls.map(t => ({ tpl: t, p: taskProgress(t, ctx) }));
+  const allDone = tpls.length > 0 && progressList.every(x => x.p.done);
+  const doneCount = progressList.filter(x => x.p.done).length;
+
+  const now = new Date();
+  const weekCN = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
+  let html = '<div class="daily-head"><div class="greet">' + greetWord() + '，<span class="hi">' + escH(childName) + '</span> 👋</div>' +
+    '<div class="date">' + localDateStr() + ' 周' + weekCN + ' · 完成 ' + doneCount + '/' + tpls.length + '</div></div>';
+
+  if (tpls.length === 0) {
+    html += '<div class="daily-empty">今天暂无任务 🎈<br>' +
+      (isSelf ? '<span style="font-size:12px">可以让爸爸妈妈在「任务管理」里为你设定每日任务</span>' : '') + '</div>';
+  } else {
+    if (allDone) {
+      html += '<div class="celebrate">🎉 太棒了！今日任务全部完成，继续保持！🏆</div>';
+    }
+    progressList.forEach(item => {
+      const t = item.tpl, p = item.p;
+      const meta = TASK_TYPE_META[t.task_type] || TASK_TYPE_META.custom;
+      const pct = p.target > 0 ? Math.min(100, Math.round(p.cur / p.target * 100)) : (p.done ? 100 : 0);
+      let onclick = "switchTab('dictation')";
+      if (t.task_type === 'homework' || t.task_type === 'goal') onclick = "location.href='homework.html'";
+      if (t.task_type === 'custom') onclick = "toggleCustomCheck(" + t.id + "," + (p.done ? 'false' : 'true') + ")";
+      html += '<div class="task-card' + (p.done ? ' done' : '') + '" onclick="' + onclick + '">' +
+        '<div class="tk-ico">' + meta.icon + '</div>' +
+        '<div class="tk-body">' +
+        '<div class="tk-title">' + escH(t.title) + (p.done ? '<span style="font-size:11px;color:#16a34a;background:#dcfce7;padding:2px 8px;border-radius:8px;">已完成</span>' : '') + '</div>' +
+        '<div class="tk-sub">' + escH(p.label) + ' · ' + escH(meta.name) + '</div>' +
+        '<div class="tk-bar"><div class="fill" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="tk-check">' + (p.done ? '✓' : '') + '</div>' +
+        '</div>';
+    });
+  }
+  if (!isSelf) {
+    html = '<div class="mgr-back"><button class="btn btn-outline btn-sm" onclick="renderAdminDaily(document.getElementById(\'daily-container\'))">← 返回成员列表</button></div>' + html;
+  }
+  box.innerHTML = html;
+}
+
+async function toggleCustomCheck(templateId, target) {
+  if (!supabaseClient) { showToast('网络未就绪', 'error'); return; }
+  try {
+    await supabaseClient.from('task_checkins').upsert({
+      task_date: localDateStr(),
+      child_id: getCurrentUser(),
+      template_id: templateId,
+      done: !!target,
+      updated_at: new Date().toISOString()
+    });
+    renderDaily();
+  } catch (e) {
+    showToast('打卡失败：' + (e.message || ''), 'error');
+  }
+}
+
+// ===== 每日任务：家长管理端 =====
+async function renderAdminDaily(box) {
+  box.innerHTML = '<p class="daily-empty">加载中…</p>';
+  const users = (await fetchAllUsers()) || [];
+  const children = users.filter(u => u.role !== 'admin');
+  let html = '<div class="daily-head"><div class="greet"><span class="hi">任务管理</span> · 家长中心</div>' +
+    '<div class="date">' + localDateStr() + '</div></div>';
+  if (children.length === 0) {
+    html += '<div class="daily-empty">还没有学生成员<br><button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="switchUser()">＋ 添加成员</button></div>';
+  } else {
+    html += '<div class="mgr-child-list">';
+    for (let i = 0; i < children.length; i++) {
+      const c = children[i];
+      const tpls = todayTemplates(await fetchTemplates(c.user_id));
+      html += '<div class="mgr-child" onclick="mgrViewChild(' + i + ',\'' + escH(c.user_id) + '\',\'' + escH(c.display_name) + '\')">' +
+        avatarOf(c.display_name, i) +
+        '<div class="nm">' + escH(c.display_name) + '</div>' +
+        '<div class="st">今日任务 ' + tpls.length + ' 项 · 点击查看/设定</div></div>';
+    }
+    html += '</div>';
+  }
+  box.innerHTML = html;
+  box.dataset.children = JSON.stringify(children);
+}
+
+async function mgrViewChild(i, childId, childName) {
+  const box = document.getElementById('daily-container');
+  const tpls = await fetchTemplates(childId);
+  const w = todayWeekday();
+  const meta = TASK_TYPE_META;
+  let html = '<div class="mgr-back"><button class="btn btn-outline btn-sm" onclick="renderAdminDaily(document.getElementById(\'daily-container\'))">← 返回成员列表</button></div>' +
+    '<div class="daily-head"><div class="greet">📋 ' + escH(childName) + ' 的每日任务设定</div>' +
+    '<button class="btn btn-primary btn-sm" onclick="showTaskForm(\'' + escH(childId) + '\',\'' + escH(childName) + '\')">＋ 添加任务</button></div>';
+
+  if (tpls.length === 0) {
+    html += '<div class="daily-empty">暂未设定任务，点右上角「添加任务」开始</div>';
+  } else {
+    tpls.forEach(t => {
+      const m = meta[t.task_type] || meta.custom;
+      const wd = (t.weekdays || []).map(d => ['一','二','三','四','五','六','日'][d-1]).join(' ') || '每天';
+      html += '<div class="tpl-item">' +
+        '<div class="t"><div class="tt">' + m.icon + ' ' + escH(t.title) + (t.active === false ? '（已停用）' : '') + '</div>' +
+        '<div class="ts">' + m.name + (t.task_type === 'dictation' ? ' · 目标 ' + t.target_count + ' 词' : '') + ' · 周' + wd + '</div></div>' +
+        '<div class="ops">' +
+        (t.active !== false
+          ? '<button class="btn btn-outline btn-sm" onclick="tplToggle(' + t.id + ',false,\'' + escH(childId) + '\')">停用</button>'
+          : '<button class="btn btn-outline btn-sm" onclick="tplToggle(' + t.id + ',true,\'' + escH(childId) + '\')">启用</button>') +
+        '<button class="btn btn-outline btn-sm" onclick="tplDelete(' + t.id + ',\'' + escH(childId) + '\')">删除</button>' +
+        '</div></div>';
+    });
+  }
+  html += '<div class="daily-head" style="margin-top:18px"><div class="greet" style="font-size:15px">📈 今日执行情况（' + localDateStr() + '）</div></div><div id="mgr-exec">加载中…</div>';
+  box.innerHTML = html;
+
+  // 执行情况：复用孩子渲染逻辑（只读）
+  const execBox = document.getElementById('mgr-exec');
+  const tmp = document.createElement('div');
+  execBox.parentNode.replaceChild(tmp, execBox);
+  await renderChildDaily(tmp, childId, childName, false);
+  const inner = tmp.innerHTML;
+  tmp.remove();
+  const exec = document.createElement('div');
+  exec.innerHTML = inner.replace(/^<div class="mgr-back">[\s\S]*?<\/div>/, '');
+  box.appendChild(exec);
+}
+
+function showTaskForm(childId, childName) {
+  const ov = document.createElement('div');
+  ov.className = 'picker-overlay';
+  let typeOpts = '';
+  Object.keys(TASK_TYPE_META).forEach(k => {
+    typeOpts += '<option value="' + k + '">' + TASK_TYPE_META[k].icon + ' ' + TASK_TYPE_META[k].name + '</option>';
+  });
+  let wdHtml = '';
+  ['一','二','三','四','五','六','日'].forEach((d, i) => {
+    wdHtml += '<button class="weekday-chip on" data-wd="' + (i + 1) + '" onclick="this.classList.toggle(\'on\')">' + d + '</button>';
+  });
+  ov.innerHTML = '<div class="picker-box"><h2>为 ' + escH(childName) + ' 添加任务</h2>' +
+    '<p class="picker-sub">设定每天需要完成的任务清单</p>' +
+    '<div class="task-form">' +
+    '<label>任务标题</label><input id="tf-title" placeholder="如：背单词 20 个" maxlength="30">' +
+    '<label>任务类型</label><select id="tf-type" onchange="document.getElementById(\'tf-count-wrap\').style.display=this.value===\'dictation\'?\'block\':\'none\'">' + typeOpts + '</select>' +
+    '<div id="tf-count-wrap"><label>目标数量（个单词）</label><input id="tf-count" type="number" min="1" max="200" value="20"></div>' +
+    '<label>生效日期</label><div class="weekday-row">' + wdHtml + '</div>' +
+    '<div style="display:flex;gap:10px;margin-top:16px;">' +
+    '<button class="btn btn-outline" style="flex:1" onclick="this.closest(\'.picker-overlay\').remove()">取消</button>' +
+    '<button class="btn btn-primary" style="flex:1" onclick="saveTaskTemplate(\'' + escH(childId) + '\',\'' + escH(childName) + '\')">保存</button></div>' +
+    '</div></div>';
+  document.body.appendChild(ov);
+  setTimeout(() => { const i = document.getElementById('tf-title'); if (i) i.focus(); }, 60);
+}
+
+async function saveTaskTemplate(childId, childName) {
+  const title = document.getElementById('tf-title').value.trim();
+  const type = document.getElementById('tf-type').value;
+  const count = parseInt(document.getElementById('tf-count').value, 10) || 20;
+  const wds = Array.from(document.querySelectorAll('.weekday-chip.on')).map(b => parseInt(b.dataset.wd, 10));
+  if (!title) { showToast('请填写任务标题', 'error'); return; }
+  if (wds.length === 0) { showToast('请至少选择一个生效日', 'error'); return; }
+  try {
+    if (supabaseClient) {
+      const { data: existing } = await supabaseClient.from('task_templates')
+        .select('sort_order').eq('child_id', childId).order('sort_order', { ascending: false }).limit(1);
+      const nextOrder = (existing && existing[0] && existing[0].sort_order ? existing[0].sort_order : 0) + 1;
+      await supabaseClient.from('task_templates').insert({
+        child_id: childId, task_type: type, title: title,
+        target_count: type === 'dictation' ? count : 0,
+        weekdays: wds, active: true, sort_order: nextOrder
+      });
+    }
+    document.querySelector('.picker-overlay').remove();
+    showToast('任务已添加', 'success');
+    mgrViewChild(0, childId, childName);
+  } catch (e) {
+    showToast('保存失败：' + (e.message || ''), 'error');
+  }
+}
+
+async function tplToggle(id, target, childId) {
+  try {
+    if (supabaseClient) await supabaseClient.from('task_templates').update({ active: !!target }).eq('id', id);
+    showToast(target ? '已启用' : '已停用', 'success');
+    refreshAfterMgr(childId);
+  } catch (e) { showToast('操作失败', 'error'); }
+}
+
+async function tplDelete(id, childId) {
+  if (!confirm('确认删除这条任务？')) return;
+  try {
+    if (supabaseClient) await supabaseClient.from('task_templates').delete().eq('id', id);
+    showToast('已删除', 'success');
+    refreshAfterMgr(childId);
+  } catch (e) { showToast('删除失败', 'error'); }
+}
+
+async function refreshAfterMgr(childId) {
+  const box = document.getElementById('daily-container');
+  const users = (await fetchAllUsers()) || [];
+  const u = users.find(x => x.user_id === childId);
+  if (u) mgrViewChild(0, childId, u.display_name);
+  else renderAdminDaily(box);
+}
+
 
 function updateUserDisplay() {
   const el = document.getElementById('currentUserName');
-  if (el) el.textContent = getCurrentUser() || '未登录';
+  if (el) {
+    const dn = localStorage.getItem('app_display_name');
+    const role = getRole();
+    el.textContent = (dn || getCurrentUser() || '未登录') + (role === 'admin' ? '（家长）' : '');
+  }
 }
 
 function updateSyncStatus(status, text) {
