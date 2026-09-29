@@ -2320,10 +2320,17 @@ async function validateAndEnter(userId) {
 }
 
 function enterUser(u) {
+  const prevUser = localStorage.getItem('app_username');
   currentUser = u.user_id;
   localStorage.setItem('app_username', u.user_id);
   localStorage.setItem('app_display_name', u.display_name || u.user_id);
   localStorage.setItem('app_role', u.role || 'child');
+  if (prevUser && prevUser !== u.user_id) {
+    // 切换用户：清空本地默写数据并重置同步时间，防止上一用户的数据串入新用户
+    Object.values(STORAGE_KEYS).forEach(function(k) { localStorage.removeItem(k); });
+    lastCloudSyncTime = 0;
+    init();
+  }
   updateUserDisplay();
   if (supabaseClient) { syncFromCloud(); startPolling(); }
   showToast('欢迎，' + (u.display_name || u.user_id) + '！', 'success');
