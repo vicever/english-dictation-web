@@ -1626,7 +1626,7 @@ function submitAnswer() {
   const q = currentQuestions[currentIndex];
   const correctAnswer = q.w.toLowerCase();
   
-  const isCorrect = compareAnswers(userAnswer, correctAnswer);
+  const isCorrect = compareAnswers(userAnswer, correctAnswer, q.alt);
   
   // Visual feedback
   input.classList.add(isCorrect ? 'correct' : 'wrong');
@@ -1658,13 +1658,24 @@ function submitAnswer() {
   }, 1500);
 }
 
-function compareAnswers(user, correct) {
+function compareAnswers(user, correct, altList) {
   // Normalize: lowercase, trim, remove extra spaces
   user = user.toLowerCase().trim().replace(/\s+/g, ' ');
   correct = correct.toLowerCase().trim().replace(/\s+/g, ' ');
   
   // Exact match
   if (user === correct) return true;
+  
+  // 同组变体（如 be absent from school / be absent from work 拆分后任一答对）
+  if (Array.isArray(altList) && altList.length) {
+    const normU = (s) => s.toLowerCase().trim().replace(/\s+/g, ' ');
+    for (let i = 0; i < altList.length; i++) {
+      const a = normU(altList[i] || '');
+      if (a && user === a) return true;
+      // 也容忍省略号差异
+      if (a && user === a.replace(/…+/g, '').trim()) return true;
+    }
+  }
   
   // Handle "advertisement / ad" type entries - accept any variant
   if (correct.includes('/')) {
